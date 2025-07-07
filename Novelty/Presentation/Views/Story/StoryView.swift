@@ -17,7 +17,7 @@ struct StoryView: View {
     @State private var fullscreen = false
     @State private var colorScheme: ColorScheme?
     
-    @AppStorage(DefaultsKey.pageStyle) private var pageStyle = PageStyle.plain
+    @AppStorage(DefaultsKey.pageStyle, store: .group) private var pageStyle = PageStyle.plain
     
     var body: some View {
         let node = story.currentNode ?? story.rootNode
@@ -26,11 +26,11 @@ struct StoryView: View {
             if showTree {
                 let previousNode = story.currentNode
                 StoryTreeView(story: story) { selectedNode in
-                    database.transaction("Jump to page") { _ in
+                    database.transaction("Jump to page", for: story.id) {
                         withAnimation(.snappy) {
                             story.currentNode = selectedNode
                         }
-                    } rollback: { _ in
+                    } rollback: {
                         withAnimation(.snappy) {
                             story.currentNode = previousNode
                         }
@@ -42,11 +42,11 @@ struct StoryView: View {
             } else {
                 StoryNodeView(node: node, editable: editable) { selectedNode in
                     let previousNode = story.currentNode
-                    database.transaction("Go to page") { _ in
+                    database.transaction("Go to page", for: story.id) {
                         withAnimation(.snappy) {
                             story.currentNode = selectedNode
                         }
-                    } rollback: { _ in
+                    } rollback: {
                         withAnimation(.snappy) {
                             story.currentNode = previousNode
                         }
@@ -78,19 +78,29 @@ struct StoryView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 Menu("Options", systemImage: "ellipsis") {
                     Section("Story") {
-                        Button(database.undoManager.undoMenuItemTitle, systemImage: "arrow.uturn.backward") {
+                        Button("New page", systemImage: "document.badge.plus") {
+                            let newNode = database.createStoryNode(in: node)
+                            database.transaction("Create new page", for: story.id) {
+                                story.currentNode = newNode
+                            } rollback: {
+                                story.currentNode = newNode.parentNode ?? story.rootNode
+                                database.deleteStoryNode(newNode)
+                            }
+                        }
+                        
+                        Button(database.undoManager.undoMenuItemTitle(for: story.id), systemImage: "arrow.uturn.backward") {
                             withAnimation(.snappy) {
-                                database.undo()
+                                database.undo(for: story.id)
                             }
                         }
                         .buttonRepeatBehavior(.enabled)
-                        .disabled(!database.undoManager.canUndo)
+                        .disabled(!database.undoManager.canUndo(for: story.id))
                         if node != story.rootNode {
                             Button("Reset", systemImage: "arrow.clockwise") {
                                 let previousNode = story.currentNode
-                                database.transaction("Reset Story") { _ in
+                                database.transaction("Reset Story", for: story.id) {
                                     story.currentNode = story.rootNode
-                                } rollback: { _ in
+                                } rollback: {
                                     story.currentNode = previousNode
                                 }
                             }
@@ -106,6 +116,31 @@ struct StoryView: View {
                     Section("Display") {
                         Toggle("Fullscreen", systemImage: "arrow.up.left.and.arrow.down.right", isOn: $fullscreen.animation(.snappy))
                         Toggle("Dark mode", systemImage: "circle.lefthalf.striped.horizontal", isOn: Binding { colorScheme == .dark } set: { colorScheme = $0 ? .dark : .light })
+                    }
+                    Section("Share") {
+                        Button("Copy URL", systemImage: "link") {
+                            UIPasteboard.general.url = URL(string: "novelty:\(story.id)")
+                        }
+                        ShareLink(item: URL(string: "novelty:\(story.id)")!, subject: Text("Novelty: \(story.title ?? "Untitled Story")"))
+                    }
+                    Section {
+                        Button("Delete page", systemImage: "trash.fill", role: .destructive) {
+                            guard let currentNode = story.currentNode, currentNode != story.rootNode else { return }
+                            let parentNode = currentNode.parentNode
+                            database.transaction("Delete page", for: story.id) {
+                                story.currentNode = parentNode
+                                database.deleteStoryNode(currentNode)
+                            } rollback: {
+                                parentNode?.children.append(currentNode)
+                                database.save(currentNode)
+                                story.currentNode = currentNode
+                            }
+                        }
+                        .foregroundStyle(.red)
+                        .disabled(story.currentNode == nil || story.currentNode == story.rootNode)
+                    } header: {
+                        Label("Danger Zone", systemImage: "exclamationmark.triangle.fill")
+                            .foregroundStyle(.red)
                     }
                 }
             }

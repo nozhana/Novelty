@@ -23,6 +23,15 @@ struct StoryNodeView: View {
     private let quickLinkTip = QuickLinkTip()
     private let editStoryTip = EditStoryTip()
     
+    init(node: StoryNode, editable: Bool = true, onSelected: @escaping (StoryNode) -> Void) {
+        self.node = node
+        self.editable = editable
+        self.onSelected = onSelected
+        if editable, node.title == nil || node.content.isEmpty {
+            _isEditing = .init(initialValue: true)
+        }
+    }
+    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
@@ -97,13 +106,13 @@ struct StoryNodeView: View {
                 if isEditing {
                     FlowLayout(spacing: 16) {
                         ForEach(node.children) { child in
-                            Label(child.title ?? "Untitled", systemImage: "link")
+                            Label(child.titleOrUntitled, systemImage: "link")
                                 .font(.system(size: 13, weight: .medium))
                                 .foregroundStyle(.primary)
                                 .safeAreaInset(edge: .trailing) {
                                     Button {
                                         withAnimation(.bouncy) {
-                                            database.deleteStoryNode(child)
+                                            node.children.removeAll(of: child)
                                         }
                                     } label: {
                                         Image(systemName: "xmark")
@@ -141,7 +150,7 @@ struct StoryNodeView: View {
                 } else {
                     FlowLayout(spacing: 16) {
                         ForEach(node.children) { child in
-                            Button(child.linkTitle ?? child.title ?? "Untitled") {
+                            Button(child.linkTitle ?? child.titleOrUntitled) {
                                 onSelected(child)
                             }
                             .font(pageStyle.bodyFont)
@@ -196,6 +205,20 @@ struct StoryNodeView: View {
                 .buttonStyle(.borderedProminent)
                 .buttonBorderShape(.capsule)
                 .font(.system(size: 15, weight: .medium))
+            }
+        }
+        .onChange(of: isEditing, initial: true) { _, newValue in
+            if newValue {
+                if node.title == nil || node.title?.isEmpty == true {
+                    focusItem = .title
+                } else {
+                    focusItem = .content
+                }
+            }
+        }
+        .onChange(of: node) { _, newValue in
+            if editable, newValue.title == nil || newValue.content.isEmpty {
+                isEditing = true
             }
         }
     }

@@ -6,19 +6,123 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		3190585B2E1C222500AC1564 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3190585A2E1C222500AC1564 /* WidgetKit.framework */; };
+		3190585D2E1C222500AC1564 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3190585C2E1C222500AC1564 /* SwiftUI.framework */; };
+		3190586A2E1C222800AC1564 /* NoveltyWidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 319058582E1C222500AC1564 /* NoveltyWidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		319058682E1C222800AC1564 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 319552B62E1A83DE00B0809D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 319058572E1C222500AC1564;
+			remoteInfo = NoveltyWidgetsExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		3190586F2E1C222800AC1564 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				3190586A2E1C222800AC1564 /* NoveltyWidgetsExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		319058582E1C222500AC1564 /* NoveltyWidgetsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NoveltyWidgetsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		3190585A2E1C222500AC1564 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		3190585C2E1C222500AC1564 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		319058942E1C2AE000AC1564 /* NoveltyWidgetsExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NoveltyWidgetsExtension.entitlements; sourceTree = "<group>"; };
 		319552BE2E1A83DE00B0809D /* Novelty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Novelty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		3190586B2E1C222800AC1564 /* Exceptions for "NoveltyWidgets" folder in "NoveltyWidgetsExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 319058572E1C222500AC1564 /* NoveltyWidgetsExtension */;
+		};
+		319058762E1C226700AC1564 /* Exceptions for "NoveltyWidgets" folder in "Novelty" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				StoryWidget/StoryConfigurationIntent.swift,
+				StoryWidget/StoryEntity.swift,
+				StoryWidget/StoryEntry.swift,
+				StoryWidget/StoryProvider.swift,
+				StoryWidget/StoryWidget.swift,
+				StoryWidget/StoryWidgetView.swift,
+			);
+			target = 319552BD2E1A83DE00B0809D /* Novelty */;
+		};
+		319058802E1C245200AC1564 /* Exceptions for "Novelty" folder in "NoveltyWidgetsExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				DataTypes/BFS.swift,
+				DataTypes/DFS.swift,
+				DataTypes/Tree.swift,
+				"Extensions/Array+.swift",
+				"Extensions/UserDefaults+.swift",
+				Managers/BatchUndoManager.swift,
+				Managers/Database/DatabaseManager.swift,
+				Managers/StoriesUndoManager.swift,
+				Models/Story.swift,
+				Models/StoryNode.swift,
+				Presentation/Environment/PageStyle.swift,
+				Utilities/Constants.swift,
+				Utilities/DefaultsKey.swift,
+			);
+			target = 319058572E1C222500AC1564 /* NoveltyWidgetsExtension */;
+		};
+		3190589C2E1C370300AC1564 /* Exceptions for "Novelty" folder in "Novelty" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 319552BD2E1A83DE00B0809D /* Novelty */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		3190585E2E1C222500AC1564 /* NoveltyWidgets */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				319058762E1C226700AC1564 /* Exceptions for "NoveltyWidgets" folder in "Novelty" target */,
+				3190586B2E1C222800AC1564 /* Exceptions for "NoveltyWidgets" folder in "NoveltyWidgetsExtension" target */,
+			);
+			path = NoveltyWidgets;
+			sourceTree = "<group>";
+		};
 		319552C02E1A83DE00B0809D /* Novelty */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				3190589C2E1C370300AC1564 /* Exceptions for "Novelty" folder in "Novelty" target */,
+				319058802E1C245200AC1564 /* Exceptions for "Novelty" folder in "NoveltyWidgetsExtension" target */,
+			);
 			path = Novelty;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		319058552E1C222500AC1564 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3190585D2E1C222500AC1564 /* SwiftUI.framework in Frameworks */,
+				3190585B2E1C222500AC1564 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		319552BB2E1A83DE00B0809D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -29,10 +133,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		319058592E1C222500AC1564 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3190585A2E1C222500AC1564 /* WidgetKit.framework */,
+				3190585C2E1C222500AC1564 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		319552B52E1A83DE00B0809D = {
 			isa = PBXGroup;
 			children = (
+				319058942E1C2AE000AC1564 /* NoveltyWidgetsExtension.entitlements */,
 				319552C02E1A83DE00B0809D /* Novelty */,
+				3190585E2E1C222500AC1564 /* NoveltyWidgets */,
+				319058592E1C222500AC1564 /* Frameworks */,
 				319552BF2E1A83DE00B0809D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +157,7 @@
 			isa = PBXGroup;
 			children = (
 				319552BE2E1A83DE00B0809D /* Novelty.app */,
+				319058582E1C222500AC1564 /* NoveltyWidgetsExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -48,6 +165,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		319058572E1C222500AC1564 /* NoveltyWidgetsExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3190586C2E1C222800AC1564 /* Build configuration list for PBXNativeTarget "NoveltyWidgetsExtension" */;
+			buildPhases = (
+				319058542E1C222500AC1564 /* Sources */,
+				319058552E1C222500AC1564 /* Frameworks */,
+				319058562E1C222500AC1564 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				3190585E2E1C222500AC1564 /* NoveltyWidgets */,
+			);
+			name = NoveltyWidgetsExtension;
+			packageProductDependencies = (
+			);
+			productName = NoveltyWidgetsExtension;
+			productReference = 319058582E1C222500AC1564 /* NoveltyWidgetsExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		319552BD2E1A83DE00B0809D /* Novelty */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 319552CE2E1A83DF00B0809D /* Build configuration list for PBXNativeTarget "Novelty" */;
@@ -55,10 +194,12 @@
 				319552BA2E1A83DE00B0809D /* Sources */,
 				319552BB2E1A83DE00B0809D /* Frameworks */,
 				319552BC2E1A83DE00B0809D /* Resources */,
+				3190586F2E1C222800AC1564 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				319058692E1C222800AC1564 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				319552C02E1A83DE00B0809D /* Novelty */,
@@ -80,6 +221,9 @@
 				LastSwiftUpdateCheck = 1600;
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
+					319058572E1C222500AC1564 = {
+						CreatedOnToolsVersion = 16.0;
+					};
 					319552BD2E1A83DE00B0809D = {
 						CreatedOnToolsVersion = 16.0;
 					};
@@ -102,11 +246,19 @@
 			projectRoot = "";
 			targets = (
 				319552BD2E1A83DE00B0809D /* Novelty */,
+				319058572E1C222500AC1564 /* NoveltyWidgetsExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		319058562E1C222500AC1564 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		319552BC2E1A83DE00B0809D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -117,6 +269,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		319058542E1C222500AC1564 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		319552BA2E1A83DE00B0809D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -126,7 +285,71 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		319058692E1C222800AC1564 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 319058572E1C222500AC1564 /* NoveltyWidgetsExtension */;
+			targetProxy = 319058682E1C222800AC1564 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		3190586D2E1C222800AC1564 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = NoveltyWidgetsExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K79BRFXPP9;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NoveltyWidgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NoveltyWidgets;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nozhana.Novelty.NoveltyWidgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		3190586E2E1C222800AC1564 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = NoveltyWidgetsExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K79BRFXPP9;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NoveltyWidgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NoveltyWidgets;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nozhana.Novelty.NoveltyWidgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		319552CC2E1A83DF00B0809D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -251,12 +474,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Novelty/Novelty.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Novelty/Preview Content\"";
 				DEVELOPMENT_TEAM = K79BRFXPP9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Novelty/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -280,12 +505,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Novelty/Novelty.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Novelty/Preview Content\"";
 				DEVELOPMENT_TEAM = K79BRFXPP9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Novelty/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -307,6 +534,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		3190586C2E1C222800AC1564 /* Build configuration list for PBXNativeTarget "NoveltyWidgetsExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3190586D2E1C222800AC1564 /* Debug */,
+				3190586E2E1C222800AC1564 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		319552B92E1A83DE00B0809D /* Build configuration list for PBXProject "Novelty" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

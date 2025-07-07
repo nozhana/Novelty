@@ -10,9 +10,10 @@ import SwiftData
 
 final class DatabaseManager: ObservableObject {
     let container: ModelContainer
-    let undoManager: UndoManager
+    let undoManager: StoriesUndoManager
     
-    private init(isStoredInMemoryOnly: Bool = false, groupContainer: ModelConfiguration.GroupContainer = .none) {
+    @MainActor
+    private init(isStoredInMemoryOnly: Bool = false, groupContainer: ModelConfiguration.GroupContainer = .identifier(Constants.groupIdentifier)) {
         let schema = Schema([
             Story.self,
             StoryNode.self,
@@ -23,16 +24,17 @@ final class DatabaseManager: ObservableObject {
         do {
             let container = try ModelContainer(for: schema, configurations: configuration)
             self.container = container
-            let undoManager = UndoManager()
-            self.undoManager = undoManager
-            DispatchQueue.main.async {
-                container.mainContext.undoManager = undoManager
-            }
+            self.undoManager = StoriesUndoManager()
+            undoManager.setup(database: self)
+            // DispatchQueue.main.async {
+            //     container.mainContext.undoManager = undoManager
+            // }
         } catch {
             fatalError("Failed to create ModelContainer: \(error)")
         }
     }
     
+    @MainActor
     static let shared = DatabaseManager()
     
 #if DEBUG
@@ -46,30 +48,13 @@ final class DatabaseManager: ObservableObject {
 #endif
     
     @MainActor
-    func transaction(_ actionName: String? = nil, perform block: @escaping (DatabaseManager) -> Void, rollback: @MainActor @Sendable @escaping (DatabaseManager) -> Void) {
-        block(self)
-        if let actionName {
-            undoManager.setActionName(actionName)
-        }
-        saveChanges()
-        undoManager.registerUndo(withTarget: self) { db in
-            DispatchQueue.main.async {
-                rollback(db)
-                db.saveChanges()
-            }
-        }
+    func transaction(_ actionName: String? = nil, for storyId: UUID, perform block: @escaping () -> Void, rollback: @MainActor @Sendable @escaping () -> Void) {
+        undoManager.transaction(actionName, for: storyId, perform: block, rollback: rollback)
     }
     
     @MainActor
-    func undo() {
-        guard undoManager.canUndo else { return }
-        undoManager.undo()
-    }
-    
-    @MainActor
-    func redo() {
-        guard undoManager.canRedo else { return }
-        undoManager.redo()
+    func undo(for storyId: UUID) {
+        undoManager.undo(for: storyId)
     }
     
     @MainActor
@@ -101,11 +86,6 @@ final class DatabaseManager: ObservableObject {
     func save<M>(_ models: [M]) where M: PersistentModel {
         models.forEach(container.mainContext.insert)
         saveChanges()
-        undoManager.registerUndo(withTarget: self) { database in
-            DispatchQueue.main.async {
-                database.delete(models)
-            }
-        }
     }
     
     @MainActor
@@ -117,11 +97,6 @@ final class DatabaseManager: ObservableObject {
     func delete<M>(_ models: [M]) where M: PersistentModel {
         models.forEach(container.mainContext.delete)
         saveChanges()
-        undoManager.registerUndo(withTarget: self) { database in
-            DispatchQueue.main.async {
-                database.save(models)
-            }
-        }
     }
     
     @MainActor
@@ -131,14 +106,8 @@ final class DatabaseManager: ObservableObject {
     
     @MainActor
     func delete<M>(model modelType: M.Type, where predicate: Predicate<M>? = nil, includeSubclasses: Bool = true) where M: PersistentModel {
-        let modelsToDelete = fetch(predicate: predicate)
         try? container.mainContext.delete(model: modelType, where: predicate, includeSubclasses: includeSubclasses)
         saveChanges()
-        undoManager.registerUndo(withTarget: self) { database in
-            DispatchQueue.main.async {
-                database.save(modelsToDelete)
-            }
-        }
     }
     
     @MainActor
@@ -160,6 +129,7 @@ extension DatabaseManager {
     func createStory(title: String? = nil, tagline: String? = nil, author: String? = nil) -> Story {
         let rootNode = StoryNode()
         let story = Story(title: title, tagline: tagline, author: author, rootNode: rootNode, nodes: [rootNode])
+        undoManager.addManager(for: story.id)
         save(story)
         return story
     }
@@ -167,6 +137,7 @@ extension DatabaseManager {
     @MainActor
     func deleteStories(_ stories: [Story]) {
         stories.flatMap(\.nodes).forEach(container.mainContext.delete)
+        stories.map(\.id).forEach(undoManager.removeManager)
         delete(stories)
     }
     

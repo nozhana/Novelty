@@ -29,6 +29,10 @@ final class StoryNode {
 }
 
 extension StoryNode {
+    var titleOrUntitled: String {
+        (title?.isEmpty ?? true) ? "Untitled" : title!
+    }
+    
     var markdown: AttributedString {
         get throws {
             try .init(markdown: content, options: .init(interpretedSyntax: .inlineOnlyPreservingWhitespace))

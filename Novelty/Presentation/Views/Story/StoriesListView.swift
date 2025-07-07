@@ -41,6 +41,8 @@ struct StoriesListView: View {
                             Button("Add mock stories", systemImage: "document.badge.plus") {
                                 database.save(Story.mockStory)
                                 database.save(Story.permissionToSwap)
+                                database.undoManager.addManager(for: Story.mockStory.id)
+                                database.undoManager.addManager(for: Story.permissionToSwap.id)
                             }
                         }
                     }

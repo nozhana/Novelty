@@ -17,8 +17,9 @@ final class Router: ObservableObject {
     
     @MainActor
     func process(_ url: URL) {
-        let stories = url.pathComponents.reduce(into: [Story]()) { partialResult, component in
-            guard let story = DatabaseManager.shared.fetchFirst(Story.self, predicate: #Predicate { $0.id.uuidString == component }) else { return }
+        let stories = url.absoluteString.split(separator: ":").map(String.init).reduce(into: [Story]()) { partialResult, component in
+            guard let uuid = UUID(uuidString: component),
+                  let story = DatabaseManager.shared.fetchFirst(Story.self, predicate: #Predicate { $0.id == uuid }) else { return }
             partialResult.append(story)
         }
         self.stories = stories
