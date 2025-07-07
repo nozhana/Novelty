@@ -15,6 +15,7 @@ struct StoryView: View {
     
     @State private var showTree = false
     @State private var fullscreen = false
+    @State private var colorScheme: ColorScheme?
     
     @AppStorage(DefaultsKey.pageStyle) private var pageStyle = PageStyle.plain
     
@@ -104,6 +105,7 @@ struct StoryView: View {
                     .pickerStyle(.palette)
                     Section("Display") {
                         Toggle("Fullscreen", systemImage: "arrow.up.left.and.arrow.down.right", isOn: $fullscreen.animation(.snappy))
+                        Toggle("Dark mode", systemImage: "circle.lefthalf.striped.horizontal", isOn: Binding { colorScheme == .dark } set: { colorScheme = $0 ? .dark : .light })
                     }
                 }
             }
@@ -111,6 +113,7 @@ struct StoryView: View {
         .toolbarVisibility(fullscreen ? .hidden : .visible, for: .navigationBar)
         .navigationBarTitleDisplayMode(editable ? .inline : .large)
         .navigationTitle($bindable.title, editable: editable)
+        .preferredColorScheme(colorScheme)
     }
 }
 

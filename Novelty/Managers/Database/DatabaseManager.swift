@@ -148,6 +148,13 @@ final class DatabaseManager: ObservableObject {
 }
 
 extension DatabaseManager {
+    @MainActor
+    func storyExists(_ story: Story) -> Bool {
+        let storyId = story.id
+        let descriptor = FetchDescriptor(predicate: #Predicate<Story> { $0.id == storyId })
+        return (try? container.mainContext.fetchCount(descriptor)) ?? 0 > 0
+    }
+    
     @discardableResult
     @MainActor
     func createStory(title: String? = nil, tagline: String? = nil, author: String? = nil) -> Story {

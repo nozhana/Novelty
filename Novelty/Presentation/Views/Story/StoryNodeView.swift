@@ -20,6 +20,9 @@ struct StoryNodeView: View {
     
     @FocusState private var focusItem: FocusItem?
     
+    private let quickLinkTip = QuickLinkTip()
+    private let editStoryTip = EditStoryTip()
+    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
@@ -87,6 +90,8 @@ struct StoryNodeView: View {
                 .contentTransition(.interpolate)
                 .font(pageStyle.bodyFont)
                 .foregroundStyle(pageStyle.foregroundStyle)
+                .popoverTip(editStoryTip)
+                .tipImageSize(.init(width: 24, height: 24))
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                 
                 if isEditing {
@@ -130,6 +135,8 @@ struct StoryNodeView: View {
                         .font(.system(size: 13, weight: .medium))
                         .buttonStyle(.borderedProminent)
                         .buttonBorderShape(.capsule)
+                        .popoverTip(quickLinkTip)
+                        .tipImageSize(.init(width: 24, height: 24))
                     }
                 } else {
                     FlowLayout(spacing: 16) {
@@ -137,8 +144,9 @@ struct StoryNodeView: View {
                             Button(child.linkTitle ?? child.title ?? "Untitled") {
                                 onSelected(child)
                             }
-                            .lineLimit(1)
                             .font(pageStyle.bodyFont)
+                            .multilineTextAlignment(.leading)
+                            .frame(maxWidth: UIScreen.main.bounds.width - 32, alignment: .leading)
                         }
                     }
                 }

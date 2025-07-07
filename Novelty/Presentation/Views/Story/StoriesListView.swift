@@ -10,13 +10,12 @@ import SwiftUI
 
 struct StoriesListView: View {
     @EnvironmentObject private var database: DatabaseManager
-    
-    @State private var path = [Story]()
+    @EnvironmentObject private var router: Router
     
     @Query(sort: [.init(\Story.created, order: .reverse)], animation: .smooth) private var stories: [Story]
     
     var body: some View {
-        NavigationStack(path: $path) {
+        NavigationStack(path: $router.stories) {
             List {
                 ForEach(stories) { story in
                     NavigationLink(value: story) {
@@ -35,10 +34,23 @@ struct StoriesListView: View {
                 StoryView(story: story)
             }
             .toolbar {
+#if DEBUG
+                if !database.storyExists(.mockStory) {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Menu("Developer Settings", systemImage: "hammer.fill") {
+                            Button("Add mock stories", systemImage: "document.badge.plus") {
+                                database.save(Story.mockStory)
+                                database.save(Story.permissionToSwap)
+                            }
+                        }
+                    }
+                }
+#endif
+                
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("New Story", systemImage: "pencil.tip.crop.circle.badge.plus.fill") {
                         let story = database.createStory()
-                        path = [story]
+                        router.stories.append(story)
                     }
                 }
             }

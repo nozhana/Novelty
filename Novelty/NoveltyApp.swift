@@ -7,13 +7,25 @@
 
 import SwiftUI
 import SwiftData
+import TipKit
 
 @main
 struct NoveltyApp: App {
+    @ObservedObject private var router = Router()
+    
+    init() {
+        try? Tips.resetDatastore()
+        try? Tips.configure([.datastoreLocation(.applicationDefault), .displayFrequency(.immediate)])
+    }
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            StoriesListView()
+                .onOpenURL { url in
+                    router.process(url)
+                }
         }
         .database(.shared)
+        .environmentObject(router)
     }
 }

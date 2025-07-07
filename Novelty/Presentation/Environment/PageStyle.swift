@@ -83,7 +83,7 @@ extension PageStyle {
         case .easy:
                 .system(size: 19)
         case .newspaper:
-                .system(size: 18, weight: .medium, design: .serif)
+                .system(size: 18, design: .serif)
         case .typewriter:
                 .system(size: 17, design: .monospaced)
         }
