@@ -28,3 +28,9 @@ struct DFS<T>: Sequence {
         .init(root: tree)
     }
 }
+
+extension DFS: CustomStringConvertible {
+    var description: String {
+        map { "\($0.value)" }.joined(separator: ", ")
+    }
+}

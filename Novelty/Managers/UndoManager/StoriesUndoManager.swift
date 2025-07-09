@@ -43,6 +43,20 @@ final class StoriesUndoManager: BatchUndoManager {
         }
     }
     
+    @MainActor
+    func registerUndo(_ actionName: String? = nil, for storyId: UUID, rollback: @MainActor @Sendable @escaping () -> Void) {
+        guard let manager = managers[storyId] else { return }
+        if let actionName {
+            manager.setActionName(actionName)
+        }
+        manager.registerUndo(withTarget: self) { undoManager in
+            DispatchQueue.main.async {
+                rollback()
+                undoManager.database.saveChanges()
+            }
+        }
+    }
+    
     func undoMenuItemTitle(for storyId: UUID) -> String {
         guard let manager = managers[storyId] else { return "Undo" }
         return manager.undoMenuItemTitle

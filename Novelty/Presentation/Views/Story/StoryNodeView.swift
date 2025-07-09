@@ -17,6 +17,7 @@ struct StoryNodeView: View {
     
     @State private var editButtonPopupLocation: CGPoint?
     @State private var isEditing = false
+    @State private var previousContent: String?
     
     @FocusState private var focusItem: FocusItem?
     
@@ -81,8 +82,8 @@ struct StoryNodeView: View {
                 
                 Group {
                     if isEditing {
-                        @Bindable var bindableNode = node
-                        TextEditor(text: $bindableNode.content)
+                        @Bindable var bindable = node
+                        TextEditor(text: $bindable.content)
                             .textEditorStyle(.plain)
                             .focused($focusItem, equals: .content)
                             .padding(.horizontal, -6)
@@ -198,6 +199,12 @@ struct StoryNodeView: View {
         .toolbar {
             if isEditing {
                 Button("Done", systemImage: "checkmark") {
+                    if let previousContent, let story = node.story {
+                        database.registerUndo("Update page content", for: story.id) {
+                            node.content = previousContent
+                        }
+                        self.previousContent = nil
+                    }
                     withAnimation(.snappy) {
                         isEditing = false
                     }
@@ -205,6 +212,9 @@ struct StoryNodeView: View {
                 .buttonStyle(.borderedProminent)
                 .buttonBorderShape(.capsule)
                 .font(.system(size: 15, weight: .medium))
+                .onAppear {
+                    previousContent = node.content
+                }
             }
         }
         .onChange(of: isEditing, initial: true) { _, newValue in

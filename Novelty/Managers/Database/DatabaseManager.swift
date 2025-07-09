@@ -53,6 +53,11 @@ final class DatabaseManager: ObservableObject {
     }
     
     @MainActor
+    func registerUndo(_ actionName: String? = nil, for storyId: UUID, rollback: @MainActor @Sendable @escaping () -> Void) {
+        undoManager.registerUndo(actionName, for: storyId, rollback: rollback)
+    }
+    
+    @MainActor
     func undo(for storyId: UUID) {
         undoManager.undo(for: storyId)
     }

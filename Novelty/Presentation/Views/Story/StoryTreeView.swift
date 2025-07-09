@@ -53,7 +53,7 @@ struct StoryTreeView: View {
                     .padding(.bottom, 24)
                 
                 let tree = Tree.from(story.rootNode, children: \.children)
-                TreeView(tree: tree, horizontalSpacing: 18, verticalSpacing: 24, lineShapeStyle: Color.accentColor.gradient) { node in
+                TreeView(tree, horizontalSpacing: 18, verticalSpacing: 24, lineShapeStyle: Color.accentColor.gradient) { node in
                     nodeView(node)
                 }
                 let orphans = story.nodes.filter { $0.parentNode == nil && $0 != story.rootNode }

@@ -21,7 +21,7 @@ struct StoryView: View {
     
     var body: some View {
         let node = story.currentNode ?? story.rootNode
-        @Bindable var bindable = story
+        @UndoBindable(target: database.undoManager, manager: database.undoManager.managers[story.id]!, actionName: "Rename Story") var bindable = story
         Group {
             if showTree {
                 let previousNode = story.currentNode
@@ -147,7 +147,7 @@ struct StoryView: View {
         }
         .toolbarVisibility(fullscreen ? .hidden : .visible, for: .navigationBar)
         .navigationBarTitleDisplayMode(editable ? .inline : .large)
-        .navigationTitle($bindable.title, editable: editable)
+        .navigationTitle($bindable.title, default: "Untitled Story", editable: editable)
         .preferredColorScheme(colorScheme)
     }
 }
@@ -159,11 +159,11 @@ struct StoryView: View {
 
 private extension View {
     @ViewBuilder
-    func navigationTitle(_ binding: Binding<String?>, editable: Bool) -> some View {
+    func navigationTitle(_ binding: Binding<String?>, default defaultValue: String, editable: Bool) -> some View {
         if editable {
-            navigationTitle(Binding { binding.wrappedValue ?? "Untitled Story" } set: { binding.wrappedValue = $0 })
+            navigationTitle(Binding { binding.wrappedValue ?? defaultValue } set: { binding.wrappedValue = $0 })
         } else {
-            navigationTitle(binding.wrappedValue ?? "Untitled Story")
+            navigationTitle(binding.wrappedValue ?? defaultValue)
         }
     }
 }

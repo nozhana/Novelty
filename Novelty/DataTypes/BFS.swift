@@ -29,3 +29,9 @@ struct BFS<T>: Sequence {
         .init(root: tree)
     }
 }
+
+extension BFS: CustomStringConvertible {
+    var description: String {
+        map { "\($0.value)" }.joined(separator: ", ")
+    }
+}
