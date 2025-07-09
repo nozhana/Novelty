@@ -33,6 +33,9 @@ extension Tree {
     }
 }
 
+extension Tree: Decodable where T: Decodable {}
+extension Tree: Encodable where T: Encodable {}
+
 @resultBuilder
 struct TreeBuilder<T> {
     static func buildBlock(_ components: Tree<T>...) -> [Tree<T>] {

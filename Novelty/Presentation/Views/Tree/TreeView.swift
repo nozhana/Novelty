@@ -124,49 +124,67 @@ extension TreeView {
     let bfs = BFS(tree: tree)
     let dfs = DFS(tree: tree)
     
-    PhaseAnimator(bfs.map(\.value)) { highlighted in
-        TreeView(tree, id: \.self) { integer in
-            Text(integer, format: .number)
-                .font(.headline.bold())
-                .padding(10)
-                .background(Circle().stroke())
-                .background(integer == highlighted ? AnyShapeStyle(.yellow) : AnyShapeStyle(.background), in: .circle)
-        }
-    } animation: { _ in
-            .easeOut(duration: 0.6).delay(0.5)
-    }
+    let treeJson = """
+{"value":1,"children":[{"value":2,"children":[{"value":3,"children":[]},{"value":4,"children":[]}]},{"value":5,"children":[]},{"value":6,"children":[{"value":7,"children":[{"value":8,"children":[]},{"value":9,"children":[]}]}]}]}
+"""
+    let jsonTree = try! treeJson.decodeJson(into: Tree<Int>.self)
     
-    PhaseAnimator(dfs.map(\.value)) { highlighted in
-        TreeView(tree, id: \.self) { integer in
-            Text(integer, format: .number)
-                .font(.headline.bold())
-                .padding(10)
-                .background(Circle().stroke())
-                .background(integer == highlighted ? AnyShapeStyle(.yellow) : AnyShapeStyle(.background), in: .circle)
-        }
-    } animation: { _ in
-            .easeOut(duration: 0.6).delay(0.5)
-    }
-    
-    TreeView(id: \.self, lineShapeStyle: .pink.gradient) {
-        Tree(1) {
-            Tree(2)
-            Tree(3)
-        }
-        
-        Tree(4) {
-            Tree(5)
-            Tree(6)
-            Tree(7) {
-                Tree(8)
-                Tree(9)
+    ScrollView {
+        VStack {
+            PhaseAnimator(bfs.map(\.value)) { highlighted in
+                TreeView(tree, id: \.self) { integer in
+                    Text(integer, format: .number)
+                        .font(.headline.bold())
+                        .padding(10)
+                        .background(Circle().stroke())
+                        .background(integer == highlighted ? AnyShapeStyle(.yellow) : AnyShapeStyle(.background), in: .circle)
+                }
+            } animation: { _ in
+                    .easeOut(duration: 0.6).delay(0.5)
+            }
+            
+            PhaseAnimator(dfs.map(\.value)) { highlighted in
+                TreeView(tree, id: \.self) { integer in
+                    Text(integer, format: .number)
+                        .font(.headline.bold())
+                        .padding(10)
+                        .background(Circle().stroke())
+                        .background(integer == highlighted ? AnyShapeStyle(.yellow) : AnyShapeStyle(.background), in: .circle)
+                }
+            } animation: { _ in
+                    .easeOut(duration: 0.6).delay(0.5)
+            }
+            
+            TreeView(id: \.self, lineShapeStyle: .pink.gradient) {
+                Tree(1) {
+                    Tree(2)
+                    Tree(3)
+                }
+                
+                Tree(4) {
+                    Tree(5)
+                    Tree(6)
+                    Tree(7) {
+                        Tree(8)
+                        Tree(9)
+                    }
+                }
+            } content: { integer in
+                Text(integer, format: .number)
+                    .font(.callout.bold())
+                    .foregroundStyle(.white)
+                    .padding(12)
+                    .background(.pink.gradient, in: .circle)
+            }
+            
+            TreeView(jsonTree, id: \.self, lineShapeStyle: .teal.gradient) { integer in
+                Text(integer, format: .number)
+                    .font(.callout.bold())
+                    .foregroundStyle(.white)
+                    .padding(12)
+                    .background(.teal.gradient, in: .circle)
             }
         }
-    } content: { integer in
-        Text(integer, format: .number)
-            .font(.callout.bold())
-            .foregroundStyle(.white)
-            .padding(12)
-            .background(.pink.gradient, in: .circle)
     }
+    .scrollIndicators(.hidden)
 }
