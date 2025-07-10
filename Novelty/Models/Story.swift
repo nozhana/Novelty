@@ -24,7 +24,8 @@ final class Story {
     var rootNode: StoryNode
     var currentNode: StoryNode?
     
-    init(title: String? = nil, tagline: String? = nil, author: String? = nil, rootNode: StoryNode, currentNode: StoryNode? = nil, nodes: [StoryNode] = []) {
+    init(id: UUID = UUID(), title: String? = nil, tagline: String? = nil, author: String? = nil, rootNode: StoryNode, currentNode: StoryNode? = nil, nodes: [StoryNode] = []) {
+        self.id = id
         self.title = title
         self.tagline = tagline
         self.author = author
@@ -35,7 +36,7 @@ final class Story {
 }
 
 extension Story {
-    convenience init(title: String? = nil, tagline: String? = nil, author: String? = nil, currentNode: StoryNode? = nil, storyTree: @escaping () -> Tree<StoryNode>) {
+    convenience init(id: UUID = UUID(), title: String? = nil, tagline: String? = nil, author: String? = nil, currentNode: StoryNode? = nil, storyTree: @escaping () -> Tree<StoryNode>) {
         let tree = storyTree()
         let dfs = DFS(tree: tree)
         var nodes = [StoryNode]()
@@ -43,7 +44,7 @@ extension Story {
             treeNode.value.children = treeNode.children.map(\.value)
             nodes.append(treeNode.value)
         }
-        self.init(title: title, tagline: tagline, author: author, rootNode: tree.value, currentNode: currentNode, nodes: nodes)
+        self.init(id: id, title: title, tagline: tagline, author: author, rootNode: tree.value, currentNode: currentNode, nodes: nodes)
     }
 }
 

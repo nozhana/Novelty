@@ -14,15 +14,16 @@ struct TreeView<T, ID, Content>: View where Content: View, ID: Hashable {
     var verticalSpacing: CGFloat = 12
     var lineStrokeStyle = StrokeStyle(lineWidth: 1)
     var lineShapeStyle: any ShapeStyle = .primary
+    var curvedConnector = false
     @ViewBuilder var content: (T) -> Content
     
-    init(_ trees: [Tree<T>], id: KeyPath<T, ID>, horizontalSpacing: CGFloat = 12, verticalSpacing: CGFloat = 12, lineStrokeStyle: StrokeStyle = StrokeStyle(lineWidth: 1), lineShapeStyle: any ShapeStyle = .primary, content: @escaping (T) -> Content) {
+    init(_ trees: [Tree<T>], id: KeyPath<T, ID>, horizontalSpacing: CGFloat = 12, verticalSpacing: CGFloat = 12, lineStrokeStyle: StrokeStyle = StrokeStyle(lineWidth: 1), lineShapeStyle: any ShapeStyle = .primary, curvedConnector: Bool = false, content: @escaping (T) -> Content) {
         self.trees = trees
         self.id = id
         self.horizontalSpacing = horizontalSpacing
         self.verticalSpacing = verticalSpacing
         self.lineStrokeStyle = lineStrokeStyle
-        self.lineShapeStyle = lineShapeStyle
+        self.curvedConnector = curvedConnector
         self.content = content
     }
     
@@ -44,7 +45,7 @@ struct TreeView<T, ID, Content>: View where Content: View, ID: Hashable {
                     if !tree.children.isEmpty {
                         HStack(alignment: .top, spacing: horizontalSpacing) {
                             ForEach(tree.children, id: treeKeypath) { child in
-                                TreeView(child, id: id, horizontalSpacing: horizontalSpacing, verticalSpacing: verticalSpacing, lineStrokeStyle: lineStrokeStyle, lineShapeStyle: lineShapeStyle, content: content)
+                                TreeView(child, id: id, horizontalSpacing: horizontalSpacing, verticalSpacing: verticalSpacing, lineStrokeStyle: lineStrokeStyle, lineShapeStyle: lineShapeStyle, curvedConnector: curvedConnector, content: content)
                             }
                         }
                     }
@@ -55,9 +56,16 @@ struct TreeView<T, ID, Content>: View where Content: View, ID: Hashable {
             GeometryReader { proxy in
                 ForEach(trees, id: treeKeypath) { tree in
                     ForEach(tree.children, id: treeKeypath) { child in
-                        Line(from: proxy[value[tree[keyPath: treeKeypath]]!],
-                             to: proxy[value[child[keyPath: treeKeypath]]!])
-                        .stroke(AnyShapeStyle(lineShapeStyle), style: lineStrokeStyle)
+                        if curvedConnector {
+                            Connector(from: proxy[value[tree[keyPath: treeKeypath]]!],
+                                      to: proxy[value[child[keyPath: treeKeypath]]!],
+                                      radius: 32)
+                            .stroke(AnyShapeStyle(lineShapeStyle), style: lineStrokeStyle)
+                        } else {
+                            Line(from: proxy[value[tree[keyPath: treeKeypath]]!],
+                                 to: proxy[value[child[keyPath: treeKeypath]]!])
+                            .stroke(AnyShapeStyle(lineShapeStyle), style: lineStrokeStyle)
+                        }
                     }
                 }
             }
@@ -74,24 +82,24 @@ private struct PreferenceDictionary<Key, Value>: PreferenceKey where Key: Hashab
 }
 
 extension TreeView {
-    init(id: KeyPath<T, ID>, horizontalSpacing: CGFloat = 12, verticalSpacing: CGFloat = 12, lineStrokeStyle: StrokeStyle = StrokeStyle(lineWidth: 1), lineShapeStyle: any ShapeStyle = .primary, @TreeBuilder<T> treeBuilder: () -> [Tree<T>], @ViewBuilder content: @escaping (T) -> Content) {
-        self.init(treeBuilder(), id: id, horizontalSpacing: horizontalSpacing, verticalSpacing: verticalSpacing, lineStrokeStyle: lineStrokeStyle, lineShapeStyle: lineShapeStyle, content: content)
+    init(id: KeyPath<T, ID>, horizontalSpacing: CGFloat = 12, verticalSpacing: CGFloat = 12, lineStrokeStyle: StrokeStyle = StrokeStyle(lineWidth: 1), lineShapeStyle: any ShapeStyle = .primary, curvedConnector: Bool = false, @TreeBuilder<T> treeBuilder: () -> [Tree<T>], @ViewBuilder content: @escaping (T) -> Content) {
+        self.init(treeBuilder(), id: id, horizontalSpacing: horizontalSpacing, verticalSpacing: verticalSpacing, lineStrokeStyle: lineStrokeStyle, lineShapeStyle: lineShapeStyle, curvedConnector: curvedConnector, content: content)
     }
     
-    init(_ trees: Tree<T>..., id: KeyPath<T, ID>, horizontalSpacing: CGFloat = 12, verticalSpacing: CGFloat = 12, lineStrokeStyle: StrokeStyle = StrokeStyle(lineWidth: 1), lineShapeStyle: any ShapeStyle = .primary, content: @escaping (T) -> Content) {
-        self.init(trees, id: id, horizontalSpacing: horizontalSpacing, verticalSpacing: verticalSpacing, lineStrokeStyle: lineStrokeStyle, lineShapeStyle: lineShapeStyle, content: content)
+    init(_ trees: Tree<T>..., id: KeyPath<T, ID>, horizontalSpacing: CGFloat = 12, verticalSpacing: CGFloat = 12, lineStrokeStyle: StrokeStyle = StrokeStyle(lineWidth: 1), lineShapeStyle: any ShapeStyle = .primary, curvedConnector: Bool = false, content: @escaping (T) -> Content) {
+        self.init(trees, id: id, horizontalSpacing: horizontalSpacing, verticalSpacing: verticalSpacing, lineStrokeStyle: lineStrokeStyle, lineShapeStyle: lineShapeStyle, curvedConnector: curvedConnector, content: content)
     }
     
-    init(horizontalSpacing: CGFloat = 12, verticalSpacing: CGFloat = 12, lineStrokeStyle: StrokeStyle = StrokeStyle(lineWidth: 1), lineShapeStyle: any ShapeStyle = .primary, @TreeBuilder<T> treeBuilder: () -> [Tree<T>], @ViewBuilder content: @escaping (T) -> Content) where T: Identifiable, T.ID == ID {
-        self.init(treeBuilder(), id: \.id, horizontalSpacing: horizontalSpacing, verticalSpacing: verticalSpacing, lineStrokeStyle: lineStrokeStyle, lineShapeStyle: lineShapeStyle, content: content)
+    init(horizontalSpacing: CGFloat = 12, verticalSpacing: CGFloat = 12, lineStrokeStyle: StrokeStyle = StrokeStyle(lineWidth: 1), lineShapeStyle: any ShapeStyle = .primary, curvedConnector: Bool = false, @TreeBuilder<T> treeBuilder: () -> [Tree<T>], @ViewBuilder content: @escaping (T) -> Content) where T: Identifiable, T.ID == ID {
+        self.init(treeBuilder(), id: \.id, horizontalSpacing: horizontalSpacing, verticalSpacing: verticalSpacing, lineStrokeStyle: lineStrokeStyle, lineShapeStyle: lineShapeStyle, curvedConnector: curvedConnector, content: content)
     }
     
-    init(_ trees: [Tree<T>], horizontalSpacing: CGFloat = 12, verticalSpacing: CGFloat = 12, lineStrokeStyle: StrokeStyle = .init(lineWidth: 1), lineShapeStyle: any ShapeStyle = .primary, @ViewBuilder content: @escaping (T) -> Content) where T: Identifiable, T.ID == ID {
-        self.init(trees, id: \.id, horizontalSpacing: horizontalSpacing, verticalSpacing: verticalSpacing, lineStrokeStyle: lineStrokeStyle, lineShapeStyle: lineShapeStyle, content: content)
+    init(_ trees: [Tree<T>], horizontalSpacing: CGFloat = 12, verticalSpacing: CGFloat = 12, lineStrokeStyle: StrokeStyle = .init(lineWidth: 1), lineShapeStyle: any ShapeStyle = .primary, curvedConnector: Bool = false, @ViewBuilder content: @escaping (T) -> Content) where T: Identifiable, T.ID == ID {
+        self.init(trees, id: \.id, horizontalSpacing: horizontalSpacing, verticalSpacing: verticalSpacing, lineStrokeStyle: lineStrokeStyle, lineShapeStyle: lineShapeStyle, curvedConnector: curvedConnector, content: content)
     }
     
-    init(_ trees: Tree<T>..., horizontalSpacing: CGFloat = 12, verticalSpacing: CGFloat = 12, lineStrokeStyle: StrokeStyle = .init(lineWidth: 1), lineShapeStyle: any ShapeStyle = .primary, @ViewBuilder content: @escaping (T) -> Content) where T: Identifiable, T.ID == ID {
-        self.init(trees, horizontalSpacing: horizontalSpacing, verticalSpacing: verticalSpacing, lineStrokeStyle: lineStrokeStyle, lineShapeStyle: lineShapeStyle, content: content)
+    init(_ trees: Tree<T>..., horizontalSpacing: CGFloat = 12, verticalSpacing: CGFloat = 12, lineStrokeStyle: StrokeStyle = .init(lineWidth: 1), lineShapeStyle: any ShapeStyle = .primary, curvedConnector: Bool = false, @ViewBuilder content: @escaping (T) -> Content) where T: Identifiable, T.ID == ID {
+        self.init(trees, horizontalSpacing: horizontalSpacing, verticalSpacing: verticalSpacing, lineStrokeStyle: lineStrokeStyle, lineShapeStyle: lineShapeStyle, curvedConnector: curvedConnector, content: content)
     }
 }
 
@@ -144,7 +152,7 @@ extension TreeView {
             }
             
             PhaseAnimator(dfs.map(\.value)) { highlighted in
-                TreeView(tree, id: \.self) { integer in
+                TreeView(tree, id: \.self, curvedConnector: true) { integer in
                     Text(integer, format: .number)
                         .font(.headline.bold())
                         .padding(10)
@@ -155,7 +163,7 @@ extension TreeView {
                     .easeOut(duration: 0.6).delay(0.5)
             }
             
-            TreeView(id: \.self, lineShapeStyle: .pink.gradient) {
+            TreeView(id: \.self, lineShapeStyle: .pink.gradient, curvedConnector: true) {
                 Tree(1) {
                     Tree(2)
                     Tree(3)

@@ -77,10 +77,12 @@
 				Managers/UndoManager/StoriesUndoManager.swift,
 				Managers/UndoManager/UndoBindable.swift,
 				Models/Story.swift,
+				Models/StoryDTO.swift,
 				Models/StoryNode.swift,
 				Presentation/Environment/PageStyle.swift,
 				Utilities/Constants.swift,
 				Utilities/DefaultsKey.swift,
+				Utilities/Files.swift,
 			);
 			target = 319058572E1C222500AC1564 /* NoveltyWidgetsExtension */;
 		};

@@ -43,6 +43,7 @@ final class DatabaseManager: ObservableObject {
         let manager = DatabaseManager(isStoredInMemoryOnly: true)
         manager.save(StoryNode.allMockNodes)
         manager.save(Story.mockStory)
+        manager.undoManager.addManager(for: Story.mockStory.id)
         return manager
     }()
 #endif

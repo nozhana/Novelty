@@ -14,6 +14,8 @@ struct StoriesListView: View {
     
     @Query(sort: [.init(\Story.created, order: .reverse)], animation: .smooth) private var stories: [Story]
     
+    @State private var dropState = DropState.idle
+    
     var body: some View {
         NavigationStack(path: $router.stories) {
             List {
@@ -29,6 +31,12 @@ struct StoriesListView: View {
                     let storiesToDelete = offsets.reduce(into: [Story]()) { $0.append(stories[$1]) }
                     database.deleteStories(storiesToDelete)
                 }
+            }
+            .safeAreaInset(edge: .bottom) {
+                DropTargetView(dropState: $dropState)
+                    .onDrop(of: [.noveltyStoryBundle], delegate: StoryBundleDropDelegate(dropState: $dropState))
+                    .padding(16)
+                    .frame(height: 240)
             }
             .navigationDestination(for: Story.self) { story in
                 StoryView(story: story)

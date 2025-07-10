@@ -2,6 +2,23 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeIconFile</key>
+			<string>story-icon.png</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.nozhana.Novelty.storybundle</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>Novelty Story Bundle</string>
+			<key>LSHandlerRank</key>
+			<string>Owner</string>
+		</dict>
+	</array>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -13,6 +30,54 @@
 			<array>
 				<string>novelty</string>
 			</array>
+		</dict>
+	</array>
+	<key>UTExportedTypeDeclarations</key>
+	<array>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Novelty Story Bundle</string>
+			<key>UTTypeIconFiles</key>
+			<array>
+				<string>story-icon.png</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>com.nozhana.Novelty.storybundle</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>storybundle</string>
+				</array>
+			</dict>
+		</dict>
+	</array>
+	<key>UTImportedTypeDeclarations</key>
+	<array>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Novelty Story Bundle</string>
+			<key>UTTypeIconFiles</key>
+			<array>
+				<string>story-icon.png</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>com.nozhana.Novelty.storybundle</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>storybundle</string>
+				</array>
+			</dict>
 		</dict>
 	</array>
 </dict>

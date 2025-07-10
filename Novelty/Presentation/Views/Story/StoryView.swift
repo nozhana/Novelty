@@ -13,6 +13,7 @@ struct StoryView: View {
     
     @EnvironmentObject private var database: DatabaseManager
     
+    @State private var showInfo = false
     @State private var showTree = false
     @State private var fullscreen = false
     @State private var colorScheme: ColorScheme?
@@ -23,7 +24,32 @@ struct StoryView: View {
         let node = story.currentNode ?? story.rootNode
         @UndoBindable(target: database.undoManager, manager: database.undoManager.managers[story.id]!, actionName: "Rename Story") var bindable = story
         Group {
-            if showTree {
+            if showInfo {
+                List {
+                    Section {
+                        TextField("Title", text: Binding { story.title ?? "" } set: { story.title = $0 }, prompt: Text(story.title ?? "My Story"))
+                            .safeAreaInset(edge: .top, alignment: .leading, spacing: 6) {
+                                Text("Title")
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                            }
+                        TextField("Tagline", text: Binding { story.tagline ?? "" } set: { story.tagline = $0 }, prompt: Text(story.tagline ?? "A beautiful story."))
+                            .safeAreaInset(edge: .top, alignment: .leading, spacing: 6) {
+                                Text("Tagline")
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                            }
+                        TextField("Author", text: Binding { story.author ?? "" } set: { story.author = $0 }, prompt: Text(story.author ?? "John Doe"))
+                            .safeAreaInset(edge: .top, alignment: .leading, spacing: 6) {
+                                Text("Author")
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                            }
+                    } header: {
+                        Label("Metadata", systemImage: "info.circle")
+                    }
+                }
+            } else if showTree {
                 let previousNode = story.currentNode
                 StoryTreeView(story: story) { selectedNode in
                     database.transaction("Jump to page", for: story.id) {
@@ -76,71 +102,83 @@ struct StoryView: View {
             }
             
             ToolbarItem(placement: .topBarTrailing) {
-                Menu("Options", systemImage: "ellipsis") {
-                    Section("Story") {
-                        Button("New page", systemImage: "document.badge.plus") {
-                            let newNode = database.createStoryNode(in: node)
-                            database.transaction("Create new page", for: story.id) {
-                                story.currentNode = newNode
-                            } rollback: {
-                                story.currentNode = newNode.parentNode ?? story.rootNode
-                                database.deleteStoryNode(newNode)
-                            }
-                        }
-                        
-                        Button(database.undoManager.undoMenuItemTitle(for: story.id), systemImage: "arrow.uturn.backward") {
-                            withAnimation(.snappy) {
-                                database.undo(for: story.id)
-                            }
-                        }
-                        .buttonRepeatBehavior(.enabled)
-                        .disabled(!database.undoManager.canUndo(for: story.id))
-                        if node != story.rootNode {
-                            Button("Reset", systemImage: "arrow.clockwise") {
-                                let previousNode = story.currentNode
-                                database.transaction("Reset Story", for: story.id) {
-                                    story.currentNode = story.rootNode
+                if showInfo {
+                    Button("Done", systemImage: "checkmark") {
+                        showInfo = false
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .buttonBorderShape(.capsule)
+                } else {
+                    Menu("Options", systemImage: "ellipsis") {
+                        Section("Story") {
+                            Button("New page", systemImage: "document.badge.plus") {
+                                let newNode = database.createStoryNode(in: node)
+                                database.transaction("Create new page", for: story.id) {
+                                    story.currentNode = newNode
                                 } rollback: {
-                                    story.currentNode = previousNode
+                                    story.currentNode = newNode.parentNode ?? story.rootNode
+                                    database.deleteStoryNode(newNode)
                                 }
                             }
-                        }
-                    }
-                    Picker("Page Style", selection: $pageStyle) {
-                        ForEach(PageStyle.allCases) { style in
-                            Label(style.menuTitle, systemImage: style.menuSystemImage)
-                                .tag(style)
-                        }
-                    }
-                    .pickerStyle(.palette)
-                    Section("Display") {
-                        Toggle("Fullscreen", systemImage: "arrow.up.left.and.arrow.down.right", isOn: $fullscreen.animation(.snappy))
-                        Toggle("Dark mode", systemImage: "circle.lefthalf.striped.horizontal", isOn: Binding { colorScheme == .dark } set: { colorScheme = $0 ? .dark : .light })
-                    }
-                    Section("Share") {
-                        Button("Copy URL", systemImage: "link") {
-                            UIPasteboard.general.url = URL(string: "novelty:\(story.id)")
-                        }
-                        ShareLink(item: URL(string: "novelty:\(story.id)")!, subject: Text("Novelty: \(story.title ?? "Untitled Story")"))
-                    }
-                    Section {
-                        Button("Delete page", systemImage: "trash.fill", role: .destructive) {
-                            guard let currentNode = story.currentNode, currentNode != story.rootNode else { return }
-                            let parentNode = currentNode.parentNode
-                            database.transaction("Delete page", for: story.id) {
-                                story.currentNode = parentNode
-                                database.deleteStoryNode(currentNode)
-                            } rollback: {
-                                parentNode?.children.append(currentNode)
-                                database.save(currentNode)
-                                story.currentNode = currentNode
+                            
+                            Button(database.undoManager.undoMenuItemTitle(for: story.id), systemImage: "arrow.uturn.backward") {
+                                withAnimation(.snappy) {
+                                    database.undo(for: story.id)
+                                }
+                            }
+                            .buttonRepeatBehavior(.enabled)
+                            .disabled(!database.undoManager.canUndo(for: story.id))
+                            if node != story.rootNode {
+                                Button("Reset", systemImage: "arrow.clockwise") {
+                                    let previousNode = story.currentNode
+                                    database.transaction("Reset Story", for: story.id) {
+                                        story.currentNode = story.rootNode
+                                    } rollback: {
+                                        story.currentNode = previousNode
+                                    }
+                                }
+                            }
+                            Button("Story Info", systemImage: "info.circle") {
+                                showInfo = true
                             }
                         }
-                        .foregroundStyle(.red)
-                        .disabled(story.currentNode == nil || story.currentNode == story.rootNode)
-                    } header: {
-                        Label("Danger Zone", systemImage: "exclamationmark.triangle.fill")
+                        Picker("Page Style", selection: $pageStyle) {
+                            ForEach(PageStyle.allCases) { style in
+                                Label(style.menuTitle, systemImage: style.menuSystemImage)
+                                    .tag(style)
+                            }
+                        }
+                        .pickerStyle(.palette)
+                        Section("Display") {
+                            Toggle("Fullscreen", systemImage: "arrow.up.left.and.arrow.down.right", isOn: $fullscreen.animation(.snappy))
+                            Toggle("Dark mode", systemImage: "circle.lefthalf.striped.horizontal", isOn: Binding { colorScheme == .dark } set: { colorScheme = $0 ? .dark : .light })
+                        }
+                        Section("Share") {
+                            Button("Copy URL", systemImage: "link") {
+                                UIPasteboard.general.url = URL(string: "novelty:\(story.id)")
+                            }
+                            ShareLink("Share URL", item: URL(string: "novelty:\(story.id)")!, message: Text("Novelty: \(story.title ?? "Untitled Story")"))
+                            ShareLink("Share Story Bundle file", item: StoryDTO(story: story), message: Text("Novelty: \(story.title ?? "Untitled Story")"), preview: .init(story.title ?? "Untitled Story", image: Image(systemName: "book.pages")))
+                        }
+                        Section {
+                            Button("Delete page", systemImage: "trash.fill", role: .destructive) {
+                                guard let currentNode = story.currentNode, currentNode != story.rootNode else { return }
+                                let parentNode = currentNode.parentNode
+                                database.transaction("Delete page", for: story.id) {
+                                    story.currentNode = parentNode
+                                    database.deleteStoryNode(currentNode)
+                                } rollback: {
+                                    parentNode?.children.append(currentNode)
+                                    database.save(currentNode)
+                                    story.currentNode = currentNode
+                                }
+                            }
                             .foregroundStyle(.red)
+                            .disabled(story.currentNode == nil || story.currentNode == story.rootNode)
+                        } header: {
+                            Label("Danger Zone", systemImage: "exclamationmark.triangle.fill")
+                                .foregroundStyle(.red)
+                        }
                     }
                 }
             }
@@ -153,8 +191,10 @@ struct StoryView: View {
 }
 
 #Preview {
-    StoryView(story: .mockStory)
-        .database(.preview)
+    NavigationStack {
+        StoryView(story: .mockStory)
+    }
+    .database(.preview)
 }
 
 private extension View {

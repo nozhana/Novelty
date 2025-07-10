@@ -11,6 +11,8 @@ struct StoryTreeView: View {
     var story: Story
     var onSelected: ((StoryNode) -> Void)?
     
+    @State private var magnification: CGFloat = 1.0
+    
     @ViewBuilder
     func nodeView(_ node: StoryNode) -> some View {
         Text((node.title?.isEmpty ?? true) ? "Untitled" : node.title!)
@@ -53,7 +55,7 @@ struct StoryTreeView: View {
                     .padding(.bottom, 24)
                 
                 let tree = Tree.from(story.rootNode, children: \.children)
-                TreeView(tree, horizontalSpacing: 18, verticalSpacing: 24, lineShapeStyle: Color.accentColor.gradient) { node in
+                TreeView(tree, horizontalSpacing: 18, verticalSpacing: 24, lineShapeStyle: Color.accentColor.gradient, curvedConnector: true) { node in
                     nodeView(node)
                 }
                 let orphans = story.nodes.filter { $0.parentNode == nil && $0 != story.rootNode }
@@ -70,8 +72,14 @@ struct StoryTreeView: View {
                     .padding(.top, 36)
                 }
             }
+            .scaleEffect(magnification)
         }
         .contentMargins(20, for: .scrollContent)
+        .overlay(alignment: .bottomTrailing) {
+            Scrubber(value: $magnification, in: 0.5...5.0, step: 0.1)
+                .frame(width: 64, height: 200)
+                .padding(8)
+        }
     }
 }
 
