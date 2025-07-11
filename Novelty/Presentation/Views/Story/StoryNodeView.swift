@@ -197,6 +197,9 @@ struct StoryNodeView: View {
             }
         }
         .toolbar {
+#if targetEnvironment(macCatalyst)
+            Toggle("Edit", systemImage: "pencil", isOn: $isEditing.animation(.smooth))
+#endif
             if isEditing {
                 Button("Done", systemImage: "checkmark") {
                     if let previousContent, let story = node.story {

@@ -99,6 +99,14 @@ extension View {
 
 extension AlertManager {
     @MainActor
+    func presentNearbyInvitationAlert(from peer: NearbyPeer, invitationHandler: @escaping (Bool) -> Void) {
+        present(title: "Connect to \(peer.peerID.displayName)?", message: "\(peer.peerID.displayName) wants to connect.", actions: [
+            .cancel("Refuse") { invitationHandler(false) },
+            .default("Accept") { invitationHandler(true) }
+        ])
+    }
+    
+    @MainActor
     func presentImportStoryAlert(for storyDto: StoryDTO) {
         present(title: "Import \"\(storyDto.title ?? "Untitled Story")\"", message: "Would you like to save \"\(storyDto.title ?? "Untitled Story")\" to your stories?", actions: [.default("Save", action: {
             let story = Story(dto: storyDto)
@@ -137,4 +145,8 @@ extension AlertManager {
             }
         ])
     }
+}
+
+extension AlertManager {
+    static let nearbyView = AlertManager()
 }

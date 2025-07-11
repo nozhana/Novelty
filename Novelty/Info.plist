@@ -2,21 +2,19 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>LSSupportsOpeningDocumentsInPlace</key>
-	<true/>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
 			<key>CFBundleTypeIconFile</key>
 			<string>story-icon.png</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>com.nozhana.Novelty.storybundle</string>
-			</array>
 			<key>CFBundleTypeName</key>
 			<string>Novelty Story Bundle</string>
 			<key>LSHandlerRank</key>
 			<string>Owner</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.nozhana.Novelty.storybundle</string>
+			</array>
 		</dict>
 	</array>
 	<key>CFBundleURLTypes</key>
@@ -31,6 +29,11 @@
 				<string>novelty</string>
 			</array>
 		</dict>
+	</array>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_novelty-mc._tcp</string>
+		<string>_novelty-mc._udp</string>
 	</array>
 	<key>UTExportedTypeDeclarations</key>
 	<array>

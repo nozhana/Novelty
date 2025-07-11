@@ -23,7 +23,9 @@ final class Router: ObservableObject {
         guard url.startAccessingSecurityScopedResource() else { return }
         defer { url.stopAccessingSecurityScopedResource() }
         guard let data = try? Data(contentsOf: url) else { return }
-        if let base64DecodedData = Data(base64Encoded: data),
+        if let storyDto = try? JSONDecoder().decode(StoryDTO.self, from: data) {
+            AlertManager.shared.presentImportStoryAlert(for: storyDto)
+        } else if let base64DecodedData = Data(base64Encoded: data),
            let storyDto = try? JSONDecoder().decode(StoryDTO.self, from: base64DecodedData) {
             AlertManager.shared.presentImportStoryAlert(for: storyDto)
         } else if let passwordProtectedStoryDto = try? JSONDecoder().decode(PasswordProtectedStoryDTO.self, from: data) {

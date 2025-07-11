@@ -12,7 +12,9 @@ struct Serialized<Value>: DynamicProperty {
     private var serializer: any Serializer<Value>
     var wrappedValue: Value
     var data: Data {
-        try! serializer.data(with: wrappedValue)
+        get throws {
+            try serializer.data(with: wrappedValue)
+        }
     }
     
     init(wrappedValue: Value, serializer: any Serializer<Value>) {

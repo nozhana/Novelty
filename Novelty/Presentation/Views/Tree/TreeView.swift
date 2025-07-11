@@ -135,7 +135,7 @@ extension TreeView {
     let treeJson = """
 {"value":1,"children":[{"value":2,"children":[{"value":3,"children":[]},{"value":4,"children":[]}]},{"value":5,"children":[]},{"value":6,"children":[{"value":7,"children":[{"value":8,"children":[]},{"value":9,"children":[]}]}]}]}
 """
-    let jsonTree = try! treeJson.decodeJson(into: Tree<Int>.self)
+    let jsonTree = try! JSONDecoder().decode(Tree<Int>.self, from: treeJson.data(using: .utf8)!)
     
     ScrollView {
         VStack {

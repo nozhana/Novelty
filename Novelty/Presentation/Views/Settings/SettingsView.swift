@@ -10,11 +10,14 @@ import SwiftUI
 struct SettingsView: View {
     private let cacheStore = DefaultsCacheStore.shared
     
-    @State private var invalidator = 0
+    @EnvironmentObject private var database: DatabaseManager
+    @Environment(\.dismiss) private var dismiss
     
     @AppStorage(DefaultsKey.defaultCacheTime, store: .group) private var defaultCacheTime: TimeInterval = 300
     
-    @Environment(\.dismiss) private var dismiss
+    @State private var invalidator = 0
+    
+    @State private var showDonateView = false
     
     var body: some View {
         let unlockedStories = cacheStore.get([UUID].self, forKey: DefaultsKey.unlockedStories) ?? []
@@ -45,7 +48,43 @@ struct SettingsView: View {
                 } header: {
                     Label("Privacy", systemImage: "hand.raised")
                 }
+                
+#if DEBUG
+                Section {
+                    Button("Add mock stories", systemImage: "books.vertical") {
+                        database.save(Story.mockStory, .permissionToSwap)
+                        database.undoManager.addManager(for: Story.mockStory.id)
+                        database.undoManager.addManager(for: Story.permissionToSwap.id)
+                        dismiss()
+                    }
+                } header: {
+                    Label("Developer", systemImage: "hammer")
+                }
+#endif
             }
+            .safeAreaInset(edge: .bottom, spacing: 16) {
+                VStack(spacing: 12) {
+                    Text("Made with 💜")
+                        .font(.caption.weight(.heavy))
+                    Link(destination: Constants.githubUrl) {
+                        Label {
+                            Text("@nozhana")
+                        } icon: {
+                            Image(.githubLogo)
+                                .resizable().scaledToFit()
+                                .frame(width: 24, height: 24)
+                        }
+                    }
+                    .font(.caption.bold().monospaced())
+                    Button("Buy me a coffee", systemImage: "mug") {
+                        showDonateView = true
+                    }
+                    .foregroundStyle(.orange.gradient)
+                    .font(.caption.weight(.medium))
+                }
+                .padding(.vertical, 12)
+            }
+            .navigationDestination(isPresented: $showDonateView, destination: DonateView.init)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Done") {

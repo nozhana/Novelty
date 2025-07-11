@@ -18,14 +18,31 @@ struct StoriesListView: View {
     
     @State private var showSettings = false
     
+    @State private var showNearbyUsers = false
+    
     var body: some View {
         NavigationStack(path: $router.stories) {
             List {
                 ForEach(stories) { story in
                     NavigationLink(value: story) {
-                        LabeledContent(story.title ?? "Untitled Story") {
+                        LabeledContent {
                             Text(story.nodes.count %* "Page")
                                 .foregroundStyle(.secondary)
+                        } label: {
+                            VStack(alignment: .leading, spacing: 6) {
+                                Text(story.title ?? "Untitled Story")
+                                    .font(.headline)
+                                if let tagline = story.tagline {
+                                    Text(tagline)
+                                        .font(.subheadline)
+                                        .foregroundStyle(.secondary)
+                                }
+                                if let author = story.author {
+                                    Text(author)
+                                        .font(.caption.bold())
+                                        .foregroundStyle(.tertiary)
+                                }
+                            }
                         }
                     }
                 }
@@ -43,28 +60,21 @@ struct StoriesListView: View {
             .navigationDestination(for: Story.self) { story in
                 StoryView(story: story)
             }
+            .fullScreenCover(isPresented: $showNearbyUsers) {
+                NearbyView()
+                    .environmentObject(NearbyConnectionManager.default())
+            }
+            .fullScreenCover(isPresented: $showSettings) {
+                SettingsView()
+            }
             .toolbar {
-#if DEBUG
-                if !database.storyExists(.mockStory) {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Menu("Developer Settings", systemImage: "hammer.fill") {
-                            Button("Add mock stories", systemImage: "document.badge.plus") {
-                                database.save(Story.mockStory)
-                                database.save(Story.permissionToSwap)
-                                database.undoManager.addManager(for: Story.mockStory.id)
-                                database.undoManager.addManager(for: Story.permissionToSwap.id)
-                            }
-                        }
+                ToolbarItemGroup(placement: .topBarTrailing) {
+                    Button("Nearby", systemImage: "wifi") {
+                        showNearbyUsers = true
                     }
-                }
-#endif
-                
-                ToolbarItem(placement: .topBarTrailing) {
                     Button("Settings", systemImage: "gearshape.fill") {
                         showSettings = true
                     }
-                }
-                ToolbarItem(placement: .topBarTrailing) {
                     Button("New Story", systemImage: "pencil.tip.crop.circle.badge.plus.fill") {
                         let story = database.createStory()
                         router.stories.append(story)
@@ -72,9 +82,6 @@ struct StoriesListView: View {
                 }
             }
             .navigationTitle("All Stories")
-            .fullScreenCover(isPresented: $showSettings) {
-                SettingsView()
-            }
         }
     }
 }
