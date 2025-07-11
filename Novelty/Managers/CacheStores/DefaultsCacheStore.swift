@@ -46,7 +46,7 @@ final class DefaultsCacheStore {
         }
     }
     
-    private func clear(valueForKey key: String) {
+    func clear(valueForKey key: String) {
         store.removeObject(forKey: key)
     }
     

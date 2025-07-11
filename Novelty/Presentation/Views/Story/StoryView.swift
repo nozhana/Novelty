@@ -17,12 +17,13 @@ struct StoryView: View {
     @State private var showTree = false
     @State private var fullscreen = false
     
-    @State private var invalidated = false
+    @State private var invalidator = 0
     
     @FocusState private var isPasswordFocused: Bool
     
     @AppStorage(DefaultsKey.pageStyle, store: .group) private var pageStyle = PageStyle.plain
     @AppStorage(DefaultsKey.dimBlueLight, store: .group) private var dimBlueLight = false
+    @AppStorage(DefaultsKey.defaultCacheTime, store: .group) private var defaultCacheTime: TimeInterval = 300
     
     @Keychain(itemClass: .password, key: .storyPasswords) var storyPasswords: [UUID: String]?
     
@@ -152,9 +153,8 @@ struct StoryView: View {
                let storyPassword = passwordBinding.wrappedValue,
                !isUnlocked {
                 PasswordWallView(password: storyPassword) {
-                    DefaultsCacheStore.shared.set(unlockedStories + [story.id], forKey: DefaultsKey.unlockedStories, timeToLive: 300)
-                    invalidated = true
-                    invalidated = false
+                    DefaultsCacheStore.shared.set(unlockedStories + [story.id], forKey: DefaultsKey.unlockedStories, timeToLive: defaultCacheTime)
+                    invalidator += 1
                 }
             }
         }
@@ -203,9 +203,8 @@ struct StoryView: View {
                                 }
                                 if unlockedStories.contains(story.id) {
                                     Button("Lock story", systemImage: "lock") {
-                                        DefaultsCacheStore.shared.set(unlockedStories.removingAll(of: story.id), forKey: DefaultsKey.unlockedStories, timeToLive: 300)
-                                        invalidated = true
-                                        invalidated = false
+                                        DefaultsCacheStore.shared.set(unlockedStories.removingAll(of: story.id), forKey: DefaultsKey.unlockedStories, timeToLive: defaultCacheTime)
+                                        invalidator += 1
                                     }
                                 }
                                 Button("Story Info", systemImage: "info.circle") {
@@ -270,8 +269,7 @@ struct StoryView: View {
                     .allowsHitTesting(false)
             }
         }
-        .invalidatableContent()
-        .redacted(reason: invalidated ? .invalidated : [])
+        .invalidatable(trigger: invalidator)
     }
 }
 

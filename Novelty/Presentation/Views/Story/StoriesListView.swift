@@ -16,6 +16,8 @@ struct StoriesListView: View {
     
     @State private var dropState = DropState.idle
     
+    @State private var showSettings = false
+    
     var body: some View {
         NavigationStack(path: $router.stories) {
             List {
@@ -58,6 +60,11 @@ struct StoriesListView: View {
 #endif
                 
                 ToolbarItem(placement: .topBarTrailing) {
+                    Button("Settings", systemImage: "gearshape.fill") {
+                        showSettings = true
+                    }
+                }
+                ToolbarItem(placement: .topBarTrailing) {
                     Button("New Story", systemImage: "pencil.tip.crop.circle.badge.plus.fill") {
                         let story = database.createStory()
                         router.stories.append(story)
@@ -65,6 +72,9 @@ struct StoriesListView: View {
                 }
             }
             .navigationTitle("All Stories")
+            .fullScreenCover(isPresented: $showSettings) {
+                SettingsView()
+            }
         }
     }
 }
