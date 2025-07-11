@@ -8,5 +8,5 @@
 import Foundation
 
 extension UserDefaults {
-    static let group = UserDefaults(suiteName: Constants.groupIdentifier)
+    static let group = UserDefaults(suiteName: Constants.groupIdentifier)!
 }

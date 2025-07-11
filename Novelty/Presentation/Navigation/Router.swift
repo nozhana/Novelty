@@ -26,6 +26,8 @@ final class Router: ObservableObject {
         if let base64DecodedData = Data(base64Encoded: data),
            let storyDto = try? JSONDecoder().decode(StoryDTO.self, from: base64DecodedData) {
             AlertManager.shared.presentImportStoryAlert(for: storyDto)
+        } else if let passwordProtectedStoryDto = try? JSONDecoder().decode(PasswordProtectedStoryDTO.self, from: data) {
+            AlertManager.shared.presentImportPasswordProtectedStoryAlert(for: passwordProtectedStoryDto)
         }
     }
     

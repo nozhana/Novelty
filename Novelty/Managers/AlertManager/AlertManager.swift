@@ -12,6 +12,7 @@ final class AlertManager: ObservableObject {
     private init() {}
     
     @Published private(set) var alert: AlertContent?
+    @Published var alertTextfieldContent = ""
     @Published var isPresented = false
     
     @MainActor
@@ -37,12 +38,14 @@ enum AlertAction: Identifiable {
     case `default`(_ title: String, action: () -> Void)
     case cancel(_ title: String = "Cancel", action: () -> Void)
     case destructive(_ title: String, action: () -> Void)
+    case textfield(_ title: String, secure: Bool = false)
     
     var title: String {
         switch self {
         case .default(let title, _): title
         case .cancel(let title, _): title
         case .destructive(let title, _): title
+        case .textfield(let title, _): title
         }
     }
     
@@ -51,6 +54,7 @@ enum AlertAction: Identifiable {
         case .default(_, let action): action
         case .cancel(_, let action): action
         case .destructive(_, let action): action
+        case .textfield: {}
         }
     }
     
@@ -59,6 +63,7 @@ enum AlertAction: Identifiable {
         case .default: nil
         case .cancel: .cancel
         case .destructive: .destructive
+        case .textfield: nil
         }
     }
     
@@ -73,7 +78,17 @@ extension View {
         return self
             .alert(manager.alert?.title ?? "", isPresented: $bindable.isPresented, presenting: manager.alert) { alertContent in
                 ForEach(alertContent.actions) { action in
-                    Button(action.title, role: action.role, action: action.action)
+                    if case .textfield(let title, let secure) = action {
+                        if secure {
+                            SecureField(title, text: $bindable.alertTextfieldContent)
+                                .keyboardType(.numberPad)
+                        } else {
+                            TextField(title, text: $bindable.alertTextfieldContent)
+                                .keyboardType(.numberPad)
+                        }
+                    } else {
+                        Button(action.title, role: action.role, action: action.action)
+                    }
                 }
             } message: { alertContent in
                 Text(alertContent.message)
@@ -95,5 +110,31 @@ extension AlertManager {
                 Router.shared.stories.removeAll(of: story)
             }
         }), .cancel {}])
+    }
+    
+    @MainActor
+    func presentImportPasswordProtectedStoryAlert(for storyDto: PasswordProtectedStoryDTO, retry: Bool = false) {
+        present(title: "Import \"\(storyDto.title ?? "Untitled Story")\"", message: retry ? "Wrong password, try again." : "This story is password protected.", actions: [
+            .textfield("Password", secure: true),
+            .cancel { [weak self] in
+                guard let self else { return }
+                alertTextfieldContent.removeAll()
+            },
+            .default("Unbox") { [weak self] in
+                guard let self else { return }
+                do {
+                    let unboxedStoryDto = try storyDto.storyBox.unbox(password: alertTextfieldContent)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        self.presentImportStoryAlert(for: unboxedStoryDto)
+                    }
+                } catch {
+                    print("Failed to unbox story: \(error)")
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        self.presentImportPasswordProtectedStoryAlert(for: storyDto, retry: true)
+                    }
+                }
+                alertTextfieldContent.removeAll()
+            }
+        ])
     }
 }

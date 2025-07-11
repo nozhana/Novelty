@@ -16,13 +16,35 @@ struct StoryView: View {
     @State private var showInfo = false
     @State private var showTree = false
     @State private var fullscreen = false
-    @State private var colorScheme: ColorScheme?
+    
+    @State private var invalidated = false
+    
+    @FocusState private var isPasswordFocused: Bool
     
     @AppStorage(DefaultsKey.pageStyle, store: .group) private var pageStyle = PageStyle.plain
+    @AppStorage(DefaultsKey.dimBlueLight, store: .group) private var dimBlueLight = false
+    
+    @Keychain(itemClass: .password, key: .storyPasswords) var storyPasswords: [UUID: String]?
     
     var body: some View {
         let node = story.currentNode ?? story.rootNode
         @UndoBindable(target: database.undoManager, manager: database.undoManager.managers[story.id]!, actionName: "Rename Story") var bindable = story
+        let passwordBinding = Binding<String?> { storyPasswords?[story.id] } set: {
+            if storyPasswords == nil {
+                if let password = $0 {
+                    storyPasswords = [story.id: password]
+                }
+            } else {
+                if let password = $0 {
+                    storyPasswords![story.id] = password
+                } else {
+                    storyPasswords!.removeValue(forKey: story.id)
+                }
+            }
+        }
+        let unlockedStories = DefaultsCacheStore.shared.get([UUID].self, forKey: DefaultsKey.unlockedStories) ?? []
+        let isUnlocked = unlockedStories.contains(story.id)
+        
         Group {
             if showInfo {
                 List {
@@ -47,6 +69,34 @@ struct StoryView: View {
                             }
                     } header: {
                         Label("Metadata", systemImage: "info.circle")
+                    }
+                    
+                    Section {
+                        if let binding = Binding(passwordBinding) {
+                            SecureField("Password", text: binding, prompt: Text("1234"))
+                                .focused($isPasswordFocused)
+                                .keyboardType(.numberPad)
+                                .submitLabel(.done)
+                                .onChange(of: binding.wrappedValue) { _, newValue in
+                                    if newValue.count > 4 {
+                                        binding.wrappedValue = String(newValue.prefix(4))
+                                    }
+                                }
+                                .safeAreaInset(edge: .trailing, spacing: 8) {
+                                    Button("Remove password", role: .destructive) {
+                                        passwordBinding.wrappedValue = nil
+                                    }
+                                    .buttonStyle(.borderedProminent)
+                                    .buttonBorderShape(.capsule)
+                                }
+                        } else {
+                            Button("Protect with password", systemImage: "hand.raised") {
+                                passwordBinding.wrappedValue = "1234"
+                                isPasswordFocused = true
+                            }
+                        }
+                    } header: {
+                        Label("Privacy", systemImage: "person.badge.key")
                     }
                 }
             } else if showTree {
@@ -96,88 +146,113 @@ struct StoryView: View {
                 .padding(24)
             }
         }
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                Toggle("Story Tree", systemImage: "arrow.branch", isOn: $showTree.animation(.interactiveSpring))
+        .opacity(dimBlueLight ? 0.75 : 1)
+        .overlay {
+            if !showInfo,
+               let storyPassword = passwordBinding.wrappedValue,
+               !isUnlocked {
+                PasswordWallView(password: storyPassword) {
+                    DefaultsCacheStore.shared.set(unlockedStories + [story.id], forKey: DefaultsKey.unlockedStories, timeToLive: 300)
+                    invalidated = true
+                    invalidated = false
+                }
             }
-            
-            ToolbarItem(placement: .topBarTrailing) {
-                if showInfo {
-                    Button("Done", systemImage: "checkmark") {
-                        showInfo = false
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .buttonBorderShape(.capsule)
-                } else {
-                    Menu("Options", systemImage: "ellipsis") {
-                        Section("Story") {
-                            Button("New page", systemImage: "document.badge.plus") {
-                                let newNode = database.createStoryNode(in: node)
-                                database.transaction("Create new page", for: story.id) {
-                                    story.currentNode = newNode
-                                } rollback: {
-                                    story.currentNode = newNode.parentNode ?? story.rootNode
-                                    database.deleteStoryNode(newNode)
-                                }
-                            }
-                            
-                            Button(database.undoManager.undoMenuItemTitle(for: story.id), systemImage: "arrow.uturn.backward") {
-                                withAnimation(.snappy) {
-                                    database.undo(for: story.id)
-                                }
-                            }
-                            .buttonRepeatBehavior(.enabled)
-                            .disabled(!database.undoManager.canUndo(for: story.id))
-                            if node != story.rootNode {
-                                Button("Reset", systemImage: "arrow.clockwise") {
-                                    let previousNode = story.currentNode
-                                    database.transaction("Reset Story", for: story.id) {
-                                        story.currentNode = story.rootNode
+        }
+        .toolbar {
+            if showInfo || passwordBinding.wrappedValue == nil || isUnlocked {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Toggle("Story Tree", systemImage: "arrow.branch", isOn: $showTree.animation(.interactiveSpring))
+                }
+                
+                ToolbarItem(placement: .topBarTrailing) {
+                    if showInfo {
+                        Button("Done", systemImage: "checkmark") {
+                            showInfo = false
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .buttonBorderShape(.capsule)
+                    } else {
+                        Menu("Options", systemImage: "ellipsis") {
+                            Section("Story") {
+                                Button("New page", systemImage: "document.badge.plus") {
+                                    let newNode = database.createStoryNode(in: node)
+                                    database.transaction("Create new page", for: story.id) {
+                                        story.currentNode = newNode
                                     } rollback: {
-                                        story.currentNode = previousNode
+                                        story.currentNode = newNode.parentNode ?? story.rootNode
+                                        database.deleteStoryNode(newNode)
                                     }
                                 }
-                            }
-                            Button("Story Info", systemImage: "info.circle") {
-                                showInfo = true
-                            }
-                        }
-                        Picker("Page Style", selection: $pageStyle) {
-                            ForEach(PageStyle.allCases) { style in
-                                Label(style.menuTitle, systemImage: style.menuSystemImage)
-                                    .tag(style)
-                            }
-                        }
-                        .pickerStyle(.palette)
-                        Section("Display") {
-                            Toggle("Fullscreen", systemImage: "arrow.up.left.and.arrow.down.right", isOn: $fullscreen.animation(.snappy))
-                            Toggle("Dark mode", systemImage: "circle.lefthalf.striped.horizontal", isOn: Binding { colorScheme == .dark } set: { colorScheme = $0 ? .dark : .light })
-                        }
-                        Section("Share") {
-                            Button("Copy URL", systemImage: "link") {
-                                UIPasteboard.general.url = URL(string: "novelty:\(story.id)")
-                            }
-                            ShareLink("Share URL", item: URL(string: "novelty:\(story.id)")!, message: Text("Novelty: \(story.title ?? "Untitled Story")"))
-                            ShareLink("Share Story Bundle file", item: StoryDTO(story: story), message: Text("Novelty: \(story.title ?? "Untitled Story")"), preview: .init(story.title ?? "Untitled Story", image: Image(systemName: "book.pages")))
-                        }
-                        Section {
-                            Button("Delete page", systemImage: "trash.fill", role: .destructive) {
-                                guard let currentNode = story.currentNode, currentNode != story.rootNode else { return }
-                                let parentNode = currentNode.parentNode
-                                database.transaction("Delete page", for: story.id) {
-                                    story.currentNode = parentNode
-                                    database.deleteStoryNode(currentNode)
-                                } rollback: {
-                                    parentNode?.children.append(currentNode)
-                                    database.save(currentNode)
-                                    story.currentNode = currentNode
+                                
+                                Button(database.undoManager.undoMenuItemTitle(for: story.id), systemImage: "arrow.uturn.backward") {
+                                    withAnimation(.snappy) {
+                                        database.undo(for: story.id)
+                                    }
+                                }
+                                .buttonRepeatBehavior(.enabled)
+                                .disabled(!database.undoManager.canUndo(for: story.id))
+                                if node != story.rootNode {
+                                    Button("Reset", systemImage: "arrow.clockwise") {
+                                        let previousNode = story.currentNode
+                                        database.transaction("Reset Story", for: story.id) {
+                                            story.currentNode = story.rootNode
+                                        } rollback: {
+                                            story.currentNode = previousNode
+                                        }
+                                    }
+                                }
+                                if unlockedStories.contains(story.id) {
+                                    Button("Lock story", systemImage: "lock") {
+                                        DefaultsCacheStore.shared.set(unlockedStories.removingAll(of: story.id), forKey: DefaultsKey.unlockedStories, timeToLive: 300)
+                                        invalidated = true
+                                        invalidated = false
+                                    }
+                                }
+                                Button("Story Info", systemImage: "info.circle") {
+                                    showInfo = true
                                 }
                             }
-                            .foregroundStyle(.red)
-                            .disabled(story.currentNode == nil || story.currentNode == story.rootNode)
-                        } header: {
-                            Label("Danger Zone", systemImage: "exclamationmark.triangle.fill")
+                            Picker("Page Style", selection: $pageStyle) {
+                                ForEach(PageStyle.allCases) { style in
+                                    Label(style.menuTitle, systemImage: style.menuSystemImage)
+                                        .tag(style)
+                                }
+                            }
+                            .pickerStyle(.palette)
+                            Section("Display") {
+                                Toggle("Fullscreen", systemImage: "arrow.up.left.and.arrow.down.right", isOn: $fullscreen.animation(.snappy))
+                                Toggle("Dim blue light", systemImage: "circle.lefthalf.striped.horizontal", isOn: $dimBlueLight.animation(.smooth(duration: 2.2)))
+                            }
+                            Section("Share") {
+                                Button("Copy URL", systemImage: "link") {
+                                    UIPasteboard.general.url = URL(string: "novelty:\(story.id)")
+                                }
+                                ShareLink("Share URL", item: URL(string: "novelty:\(story.id)")!, message: Text("Novelty: \(story.title ?? "Untitled Story")"))
+                                ShareLink("Share Story Bundle file", item: StoryDTO(story: story), message: Text("Novelty: \(story.title ?? "Untitled Story")"), preview: .init(story.title ?? "Untitled Story", image: Image(systemName: "book.pages")))
+                                if let password = passwordBinding.wrappedValue,
+                                   let passwordProtectedStory = try? PasswordProtectedStoryDTO(storyDto: StoryDTO(story: story), password: password) {
+                                    ShareLink("Share Password Protected Story Bundle file", item: passwordProtectedStory, message: Text("Novelty: \(story.title ?? "Untitled Story")"), preview: .init(story.title ?? "Untitled Story", image: Image(systemName: "book.pages")))
+                                }
+                            }
+                            Section {
+                                Button("Delete page", systemImage: "trash.fill", role: .destructive) {
+                                    guard let currentNode = story.currentNode, currentNode != story.rootNode else { return }
+                                    let parentNode = currentNode.parentNode
+                                    database.transaction("Delete page", for: story.id) {
+                                        story.currentNode = parentNode
+                                        database.deleteStoryNode(currentNode)
+                                    } rollback: {
+                                        parentNode?.children.append(currentNode)
+                                        database.save(currentNode)
+                                        story.currentNode = currentNode
+                                    }
+                                }
                                 .foregroundStyle(.red)
+                                .disabled(story.currentNode == nil || story.currentNode == story.rootNode)
+                            } header: {
+                                Label("Danger Zone", systemImage: "exclamationmark.triangle.fill")
+                                    .foregroundStyle(.red)
+                            }
                         }
                     }
                 }
@@ -186,7 +261,17 @@ struct StoryView: View {
         .toolbarVisibility(fullscreen ? .hidden : .visible, for: .navigationBar)
         .navigationBarTitleDisplayMode(editable ? .inline : .large)
         .navigationTitle($bindable.title, default: "Untitled Story", editable: editable)
-        .preferredColorScheme(colorScheme)
+        .overlay {
+            if dimBlueLight {
+                Rectangle()
+                    .fill(.blueLight)
+                    .ignoresSafeArea()
+                    .transition(.opacity)
+                    .allowsHitTesting(false)
+            }
+        }
+        .invalidatableContent()
+        .redacted(reason: invalidated ? .invalidated : [])
     }
 }
 

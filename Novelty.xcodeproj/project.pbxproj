@@ -68,7 +68,9 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				DataTypes/BFS.swift,
+				DataTypes/Cacheable.swift,
 				DataTypes/DFS.swift,
+				DataTypes/Encrypted.swift,
 				DataTypes/Tree.swift,
 				"Extensions/Array+.swift",
 				"Extensions/UserDefaults+.swift",

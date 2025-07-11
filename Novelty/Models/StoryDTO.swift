@@ -78,3 +78,26 @@ extension StoryDTO: Transferable {
 extension UTType {
     static let noveltyStoryBundle = UTType("com.nozhana.Novelty.storybundle")!
 }
+
+struct PasswordProtectedStoryDTO: Codable {
+    var title: String?
+    var storyBox: Encrypted<StoryDTO>
+    
+    init(storyDto: StoryDTO, password: String) throws {
+        self.title = storyDto.title
+        self.storyBox = try .init(storyDto, with: password)
+    }
+}
+
+extension PasswordProtectedStoryDTO: Transferable {
+    static var transferRepresentation: some TransferRepresentation {
+        DataRepresentation(contentType: .noveltyStoryBundle) { dto in
+            try JSONEncoder().encode(dto)
+        } importing: { data in
+            try JSONDecoder().decode(Self.self, from: data)
+        }
+        .suggestedFileName {
+            ($0.title ?? "Untitled Story") + ".storybundle"
+        }
+    }
+}

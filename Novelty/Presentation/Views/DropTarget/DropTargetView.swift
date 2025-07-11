@@ -11,7 +11,9 @@ import UniformTypeIdentifiers
 struct DropTargetView: View {
     @Binding var dropState: DropState
     
-    private let startDate = Date.now
+    @EnvironmentObject private var router: Router
+    
+    @State private var showFilePicker = false
     
     var body: some View {
         ZStack {
@@ -21,9 +23,31 @@ struct DropTargetView: View {
                     .fill(.background.secondary)
                     .transition(.opacity)
                     
-                ContentUnavailableView("Import Story", systemImage: "square.and.arrow.down", description: Text("Drop a story bundle file here to import."))
-                    .foregroundStyle(.secondary)
-                    .transition(.scale.combined(with: .opacity))
+                VStack(spacing: 12) {
+                    Image(systemName: "square.and.arrow.down")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 32, height: 32)
+                        .imageScale(.large)
+                    Text("Import Story")
+                        .font(.title2.bold())
+                    Text("Drop a story bundle file here to import.")
+                        .font(.headline)
+                        .foregroundStyle(.secondary)
+                    Button("Pick a file", systemImage: "document.badge.ellipsis") {
+                        showFilePicker = true
+                    }
+                    .font(.subheadline.bold())
+                    .fileImporter(isPresented: $showFilePicker, allowedContentTypes: [.noveltyStoryBundle]) { result in
+                        switch result {
+                        case .success(let url):
+                            router.process(url)
+                        case .failure(let error):
+                            print("Failed to import file: \(error)")
+                        }
+                    }
+                }
+                .transition(.scale.combined(with: .opacity))
             case .invalid:
                 RoundedRectangle(cornerRadius: 16)
                     .fill(.red.opacity(0.4))
@@ -105,11 +129,17 @@ struct StoryBundleDropDelegate: DropDelegate {
             } else {
                 storyData = nil
             }
-            guard let storyData,
-                  let base64DecodedData = Data(base64Encoded: storyData),
-                  let decodedStoryDto = try? JSONDecoder().decode(StoryDTO.self, from: base64DecodedData) else { return }
-            DispatchQueue.main.async {
-                AlertManager.shared.presentImportStoryAlert(for: decodedStoryDto)
+            if let storyData,
+               let base64DecodedData = Data(base64Encoded: storyData),
+               let decodedStoryDto = try? JSONDecoder().decode(StoryDTO.self, from: base64DecodedData) {
+                DispatchQueue.main.async {
+                    AlertManager.shared.presentImportStoryAlert(for: decodedStoryDto)
+                }
+            } else if let storyData,
+                      let decodedPasswordProtectedStory = try? JSONDecoder().decode(PasswordProtectedStoryDTO.self, from: storyData) {
+                DispatchQueue.main.async {
+                    AlertManager.shared.presentImportPasswordProtectedStoryAlert(for: decodedPasswordProtectedStory)
+                }
             }
         }
         
