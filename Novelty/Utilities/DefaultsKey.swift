@@ -12,4 +12,6 @@ enum DefaultsKey {
     static let dimBlueLight = "dimBlueLight"
     static let unlockedStories = "unlockedStories"
     static let defaultCacheTime = "defaultCacheTime"
+    static let isOnboarded = "isOnboarded"
+    static let resetTips = "resetTips"
 }

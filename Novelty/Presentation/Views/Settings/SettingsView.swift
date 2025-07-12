@@ -14,6 +14,8 @@ struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
     
     @AppStorage(DefaultsKey.defaultCacheTime, store: .group) private var defaultCacheTime: TimeInterval = 300
+    @AppStorage(DefaultsKey.isOnboarded, store: .group) private var isOnboarded = false
+    @AppStorage(DefaultsKey.resetTips, store: .group) private var resetTips = false
     
     @State private var invalidator = 0
     
@@ -58,6 +60,22 @@ struct SettingsView: View {
                         let folder = StoryFolder(title: "Mock Stories", stories: [.mockStory, .permissionToSwap])
                         database.save(folder)
                         dismiss()
+                    }
+                    Button("Reset Onboarding", systemImage: "arrow.clockwise", role: .destructive) {
+                        isOnboarded = false
+                    }
+                    .foregroundStyle(.red)
+                    if resetTips {
+                        Label("Tips will be reset on the next launch.", systemImage: "info.circle")
+                            .foregroundStyle(.secondary)
+                            .onTapGesture(count: 2) {
+                                resetTips = false
+                            }
+                    } else {
+                        Button("Reset Tips", systemImage: "arrow.clockwise", role: .destructive) {
+                            resetTips = true
+                        }
+                        .foregroundStyle(.red)
                     }
                 } header: {
                     Label("Developer", systemImage: "hammer")
