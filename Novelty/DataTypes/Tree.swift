@@ -79,7 +79,7 @@ struct Tree<T> {
 }
 
 extension Tree {
-    /// Convenience initializer to build a tree recusrively from a certain type.
+    /// Convenience initializer to build a tree recusrively from a certain type using a keypath.
     /// - Parameters:
     ///   - value: The root instance.
     ///   - children: The keypath from the value type that results in the descendent nodes.
@@ -90,18 +90,33 @@ extension Tree {
         })
     }
     
+    /// Convenience initializer to build a tree recursively from a certain type using a builder function.
+    /// - Parameters:
+    ///   - value: The root instance.
+    ///   - childrenGenerator: The builder function used to generate the descendents for each node.
+    /// - Returns: A ``Tree`` of root type `T`.
     static func from(_ value: T, children childrenGenerator: @escaping (T) -> [T]) -> Self {
         Tree(value, children: childrenGenerator(value).map { child in
             from(child, children: childrenGenerator)
         })
     }
     
+    /// Convenience initializer to build a tree recursively from a certain type using a throwing builder function.
+    /// - Parameters:
+    ///   - value: The root instance.
+    ///   - childrenGenerator: The throwing builder function used to generate the descendents for each node.
+    /// - Returns: A ``Tree`` of root type `T`.
     static func from(_ value: T, children childrenGenerator: @escaping (T) throws -> [T]) rethrows -> Self {
         Tree(value, children: try childrenGenerator(value).map { child in
             try from(child, children: childrenGenerator)
         })
     }
     
+    /// Convenience initializer to build a tree recursively from a certain type using an asynchronous builder function.
+    /// - Parameters:
+    ///   - value: The root instance.
+    ///   - childrenGenerator: The asynchronous builder function used to generate the descendents for each node.
+    /// - Returns: A ``Tree`` of root type `T`.
     static func from(_ value: T, children childrenGenerator: @escaping (T) async -> [T]) async -> Self {
         var children = [Tree<T>]()
         for child in await childrenGenerator(value) {
@@ -111,6 +126,11 @@ extension Tree {
         return Tree(value, children: children)
     }
     
+    /// Convenience initializer to build a tree recursively from a certain type using an asynchronous throwing builder function.
+    /// - Parameters:
+    ///   - value: The root instance.
+    ///   - childrenGenerator: The asynchronous throwing builder function used to generate the descendents for each node.
+    /// - Returns: A ``Tree`` of root type `T`.
     static func from(_ value: T, children childrenGenerator: @escaping (T) async throws -> [T]) async rethrows -> Self {
         var children = [Tree<T>]()
         for child in try await childrenGenerator(value) {
@@ -122,10 +142,18 @@ extension Tree {
 }
 
 extension Tree {
+    /// Cascading function used to configure and add a child to the current tree.
+    /// - Parameters:
+    ///   - child: The child value to be appended.
+    ///   - childBuilder: Configures the created child.
+    /// - Returns: The modified self.
     func child(_ child: T, childBuilder: @escaping (Self) -> Self) -> Self {
         Tree(value, children: children + [childBuilder(Tree(child))])
     }
     
+    /// Cascading function used to add a child to the current tree.
+    /// - Parameter child: The child value to be appended.
+    /// - Returns: The modified self.
     func child(_ child: T) -> Self {
         Tree(value, children: children + [Tree(child)])
     }
@@ -169,6 +197,9 @@ extension Tree: ExpressibleByBooleanLiteral where T == Bool {
     }
 }
 
+/// A result builder that generates an array of ``Tree`` structures.
+///
+/// - Note: See ``TreeView``.
 @resultBuilder
 struct TreeBuilder<T> {
     static func buildBlock(_ components: Tree<T>...) -> [Tree<T>] {

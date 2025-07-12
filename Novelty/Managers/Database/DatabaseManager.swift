@@ -8,6 +8,42 @@
 import Foundation
 import SwiftData
 
+/// A configurable database manager for `SwiftData` containers.
+///
+/// - Note: Uses a singleton pattern. See ``shared``.
+/// - Warning: Use the ``preview`` instance for previews.
+///
+/// Inject the `DatabaseManager` into a ``SwiftUI/Scene`` using the helper function ``SwiftUI/Scene/database(_:)``,
+/// or into a ``SwiftUICore/View`` using ``SwiftUICore/View/database(_:)``.
+///
+/// ## Injecting in scenes
+///
+/// ```swift
+/// var body: some Scene {
+///     WindowGroup {
+///         MainView()
+///     }
+///     .database(.shared)
+/// }
+/// ```
+///
+/// ## Injecting in views
+///
+/// ```swift
+/// var body: some View {
+///     MainView()
+///         .database(.shared)
+/// }
+/// ```
+///
+/// ## Injecting in previews
+///
+/// ```swift
+/// #Preview {
+///     SomeView()
+///         .database(.preview)
+/// }
+/// ```
 final class DatabaseManager: ObservableObject {
     let container: ModelContainer
     let undoManager: StoriesUndoManager
@@ -34,10 +70,14 @@ final class DatabaseManager: ObservableObject {
         }
     }
     
+    /// The singleton instance of ``DatabaseManager``.
     @MainActor
     static let shared = DatabaseManager()
     
 #if DEBUG
+    /// The preview singleton instance of ``DatabaseManager``.
+    ///
+    /// - Note: This instance doesn't persist data to the disk, and contains the mock entities initially.
     @MainActor
     static let preview = {
         let manager = DatabaseManager(isStoredInMemoryOnly: true)
@@ -49,6 +89,12 @@ final class DatabaseManager: ObservableObject {
     }()
 #endif
     
+    /// Define and perform an undoable transaction on the database.
+    /// - Parameters:
+    ///   - actionName: The name of the action to show on the undo label.
+    ///   - storyId: The ID of the story this action pertains to.
+    ///   - block: The action to be performed.
+    ///   - rollback: The rollback function for the action—*i.e. the function that resets the database state to where it was before performing the action.*
     @MainActor
     func transaction(_ actionName: String? = nil, for storyId: UUID, perform block: @escaping () -> Void, rollback: @MainActor @Sendable @escaping () -> Void) {
         undoManager.transaction(actionName, for: storyId, perform: block, rollback: rollback)
