@@ -12,6 +12,8 @@ import UniformTypeIdentifiers
 struct StoryFolderView: View {
     var folder: StoryFolder
     
+    @Query private var stories: [Story]
+    
     @EnvironmentObject private var database: DatabaseManager
     @EnvironmentObject private var router: Router
     
@@ -19,9 +21,13 @@ struct StoryFolderView: View {
     
     @State private var invalidator = 0
     
+    init(folder: StoryFolder) {
+        self.folder = folder
+        let folderID = folder.id
+        self._stories = .init(filter: #Predicate { $0.folder?.id == folderID }, sort: [.init(\.updated, order: .reverse)], animation: .smooth)
+    }
+    
     var body: some View {
-        let folderId = folder.id
-        let stories = database.fetch(Story.self, predicate: #Predicate { $0.folder?.id == folderId }, sortBy: [.init(\Story.updated, order: .reverse)])
         @Bindable var bindable = folder
         List {
             Group {
