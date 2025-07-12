@@ -7,25 +7,83 @@
 
 import Foundation
 
+/// A generic struct representing a tree data structure.
+///
+/// - Note: This structure contains itself recursively.
 struct Tree<T> {
+    /// The wrapped value of the tree node.
     var value: T
+    /// The descendents of this tree node.
     var children: [Tree<T>] = []
     
+    /// Initialize a tree with a wrapped value and a list of descendent trees.
+    /// - Parameters:
+    ///   - value: The wrapped value.
+    ///   - children: The descendent trees.
+    ///
+    /// ## Example usage
+    /// ```swift
+    /// let tree = Tree("Parent", children: [
+    ///     Tree("Child 1"),
+    ///     Tree("Child 2", children: [
+    ///         Tree("Child of child 2")
+    ///     ]
+    /// ])
+    /// ```
     init(_ value: T, children: [Tree<T>] = []) {
         self.value = value
         self.children = children
     }
     
+    /// Initialize a tree with a wrapped value and a variadic sequence of descendent trees.
+    /// - Parameters:
+    ///   - value: The wrapped value.
+    ///   - children: The descendent trees.
+    ///
+    /// ## Example usage:
+    /// ```swift
+    /// let tree = Tree(
+    ///     "Parent",
+    ///     children: Tree(
+    ///         "Child 1"
+    ///     ),
+    ///     Tree(
+    ///         "Child 2",
+    ///         children: Tree(
+    ///             "Child of child 2"
+    ///         )
+    ///     )
+    /// )
+    /// ```
     init(_ value: T, children: Tree<T>...) {
         self.init(value, children: children)
     }
     
+    /// Initialize a tree with a wrapped value and a tree builder function.
+    /// - Parameters:
+    ///   - value: The wrapped value.
+    ///   - children: The tree builder function that generates the descendent trees.
+    ///
+    /// ## Example usage:
+    /// ```swift
+    /// let tree = Tree("Parent") {
+    ///     Tree("Child 1")
+    ///     Tree("Child 2") {
+    ///         Tree("Child of child 2")
+    ///     }
+    /// }
+    /// ```
     init(_ value: T, @TreeBuilder<T> children: @escaping () -> [Tree<T>]) {
         self.init(value, children: children())
     }
 }
 
 extension Tree {
+    /// Convenience initializer to build a tree recusrively from a certain type.
+    /// - Parameters:
+    ///   - value: The root instance.
+    ///   - children: The keypath from the value type that results in the descendent nodes.
+    /// - Returns: A ``Tree`` of root type `T`.
     static func from(_ value: T, children: KeyPath<T, [T]>) -> Self {
         Tree(value, children: value[keyPath: children].map { child in
             from(child, children: children)

@@ -7,6 +7,27 @@
 
 import Foundation
 
+/// Breadth-First-Traversal sequence representation for a ``Tree``.
+///
+/// ## Example usage:
+/// ```swift
+/// let tree = Tree(1) {
+///     Tree(2) {
+///         Tree(3)
+///         Tree(4)
+///     }
+///     Tree(5) {
+///         Tree(6) {
+///             Tree(7)
+///             Tree(8)
+///         }
+///         Tree(9)
+///     }
+/// }
+///
+/// print(BFS(tree: tree))
+/// // 1, 2, 5, 3, 4, 6, 9, 7, 8
+/// ```
 struct BFS<T>: Sequence {
     final class Iterator: IteratorProtocol {
         private var queue: [Tree<T>]

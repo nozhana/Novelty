@@ -7,6 +7,27 @@
 
 import Foundation
 
+/// Depth-First-Traversal sequence representation for a ``Tree``.
+///
+/// ## Example usage:
+/// ```swift
+/// let tree = Tree(1) {
+///     Tree(2) {
+///         Tree(3)
+///         Tree(4)
+///     }
+///     Tree(5) {
+///         Tree(6) {
+///             Tree(7)
+///             Tree(8)
+///         }
+///         Tree(9)
+///     }
+/// }
+///
+/// print(DFS(tree: tree))
+/// // 1, 2, 3, 4, 5, 6, 7, 8, 9
+/// ```
 struct DFS<T>: Sequence {
     final class Iterator: IteratorProtocol {
         private var stack: [Tree<T>]
