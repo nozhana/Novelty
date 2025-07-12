@@ -38,6 +38,21 @@ extension Tree {
         })
     }
     
+    static func from(_ value: T, children childrenGenerator: @escaping (T) throws -> [T]) rethrows -> Self {
+        Tree(value, children: try childrenGenerator(value).map { child in
+            try from(child, children: childrenGenerator)
+        })
+    }
+    
+    static func from(_ value: T, children childrenGenerator: @escaping (T) async -> [T]) async -> Self {
+        var children = [Tree<T>]()
+        for child in await childrenGenerator(value) {
+            let tree = await from(child, children: childrenGenerator)
+            children.append(tree)
+        }
+        return Tree(value, children: children)
+    }
+    
     static func from(_ value: T, children childrenGenerator: @escaping (T) async throws -> [T]) async rethrows -> Self {
         var children = [Tree<T>]()
         for child in try await childrenGenerator(value) {
