@@ -24,6 +24,8 @@ final class Story {
     var rootNode: StoryNode
     var currentNode: StoryNode?
     
+    var folder: StoryFolder?
+    
     init(id: UUID = UUID(), title: String? = nil, tagline: String? = nil, author: String? = nil, rootNode: StoryNode, currentNode: StoryNode? = nil, nodes: [StoryNode] = []) {
         self.id = id
         self.title = title

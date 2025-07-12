@@ -21,10 +21,19 @@ struct NoveltyApp: App {
     
     var body: some Scene {
         WindowGroup {
-            StoriesListView()
+            StoryFoldersView()
                 .alertManager(alertManager)
                 .onOpenURL { url in
                     router.process(url)
+                }
+                .onAppear {
+                    // Soft migration
+                    let database = DatabaseManager.shared
+                    let orphanStories = database.fetch(Story.self, predicate: #Predicate { $0.folder == nil })
+                    for story in orphanStories {
+                        story.folder = .inbox
+                    }
+                    database.saveChanges()
                 }
         }
         .database(.shared)

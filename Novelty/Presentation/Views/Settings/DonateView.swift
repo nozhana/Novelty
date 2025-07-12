@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct DonateView: View {
+    @State private var copyTrigger = 0
+    
     var body: some View {
         List {
             ForEach(Constants.CryptoWalletAddress.allCases) { wallet in
@@ -20,6 +22,7 @@ struct DonateView: View {
                 } label: {
                     Button {
                         UIPasteboard.general.string = wallet.walletAddress
+                        copyTrigger += 1
                     } label: {
                         HStack(spacing: 6) {
                             Image(wallet.icon)
@@ -30,6 +33,19 @@ struct DonateView: View {
                 }
                 .labelStyle(.titleAndIcon)
             }
+        }
+        .safeAreaInset(edge: .bottom) {
+            Label("Copied to clipboard.", systemImage: "link")
+                .font(.callout.width(.condensed).bold())
+                .foregroundStyle(.secondary)
+                .phaseAnimator([0.0, 1.0], trigger: copyTrigger) { content, phase in
+                    content
+                        .scaleEffect(phase, anchor: .bottom)
+                        .opacity(phase)
+                } animation: { phase in
+                        .snappy.delay(phase == 0 ? 1 : 0)
+                }
+                .padding(.bottom, 36)
         }
         .toolbar {
             ToolbarItem(placement: .principal) {

@@ -80,6 +80,7 @@
 				Managers/UndoManager/UndoBindable.swift,
 				Models/Story.swift,
 				Models/StoryDTO.swift,
+				Models/StoryFolder.swift,
 				Models/StoryNode.swift,
 				Presentation/Environment/PageStyle.swift,
 				Resources/Assets.xcassets,

@@ -58,16 +58,15 @@ struct NearbyView: View {
                             .labelStyle(.vertical(spacing: 6))
                             .font(.caption.bold())
                             .safeAreaInset(edge: .bottom, spacing: 4) {
-                                if let deviceModel = peer.deviceModel {
-                                    Text(deviceModel)
-                                        .font(.caption2)
-                                        .foregroundStyle(.secondary)
-                                }
                                 if peer.status == .connected {
                                     Image(systemName: "wifi")
                                         .font(.subheadline.bold())
                                         .imageScale(.small)
                                         .foregroundStyle(.green.gradient)
+                                } else if let deviceModel = peer.deviceModel {
+                                    Text(deviceModel)
+                                        .font(.caption2)
+                                        .foregroundStyle(.secondary)
                                 }
                             }
                             .padding(18)

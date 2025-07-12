@@ -279,14 +279,3 @@ struct StoryView: View {
     }
     .database(.preview)
 }
-
-private extension View {
-    @ViewBuilder
-    func navigationTitle(_ binding: Binding<String?>, default defaultValue: String, editable: Bool) -> some View {
-        if editable {
-            navigationTitle(Binding { binding.wrappedValue ?? defaultValue } set: { binding.wrappedValue = $0 })
-        } else {
-            navigationTitle(binding.wrappedValue ?? defaultValue)
-        }
-    }
-}

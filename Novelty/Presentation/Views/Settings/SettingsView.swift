@@ -55,6 +55,8 @@ struct SettingsView: View {
                         database.save(Story.mockStory, .permissionToSwap)
                         database.undoManager.addManager(for: Story.mockStory.id)
                         database.undoManager.addManager(for: Story.permissionToSwap.id)
+                        let folder = StoryFolder(title: "Mock Stories", stories: [.mockStory, .permissionToSwap])
+                        database.save(folder)
                         dismiss()
                     }
                 } header: {

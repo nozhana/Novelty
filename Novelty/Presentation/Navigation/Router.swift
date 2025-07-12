@@ -5,7 +5,7 @@
 //  Created by Nozhan A. on 7/7/25.
 //
 
-import Foundation
+import SwiftUI
 
 final class Router: ObservableObject {
     enum NavigationItem: String {
@@ -13,7 +13,7 @@ final class Router: ObservableObject {
     }
     
     @Published var selectedItem: NavigationItem = .stories
-    @Published var stories: [Story] = []
+    @Published var navigationPath = NavigationPath()
     
     static let shared = Router()
     private init() {}
@@ -39,11 +39,10 @@ final class Router: ObservableObject {
             handleFileResource(url)
             return
         }
-        let stories = url.absoluteString.split(separator: ":").map(String.init).reduce(into: [Story]()) { partialResult, component in
+        url.absoluteString.split(separator: ":").map(String.init).forEach { component in
             guard let uuid = UUID(uuidString: component),
                   let story = DatabaseManager.shared.fetchFirst(Story.self, predicate: #Predicate { $0.id == uuid }) else { return }
-            partialResult.append(story)
+            navigationPath.append(story)
         }
-        self.stories = stories
     }
 }

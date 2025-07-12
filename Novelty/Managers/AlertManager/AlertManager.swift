@@ -110,13 +110,20 @@ extension AlertManager {
     func presentImportStoryAlert(for storyDto: StoryDTO) {
         present(title: "Import \"\(storyDto.title ?? "Untitled Story")\"", message: "Would you like to save \"\(storyDto.title ?? "Untitled Story")\" to your stories?", actions: [.default("Save", action: {
             let story = Story(dto: storyDto)
+            story.folder = .inbox
+            let router = Router.shared
             let database = DatabaseManager.shared
+            router.navigationPath = .init([StoryFolder.inbox])
             database.save(story)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                router.navigationPath.append(story)
+            }
             database.undoManager.addManager(for: story.id)
             database.registerUndo("Import \(story.title ?? "Untitled Story")", for: story.id) {
                 database.deleteStories([story])
-                Router.shared.stories.removeAll(of: story)
+                Router.shared.navigationPath = .init([story])
             }
+            
         }), .cancel {}])
     }
     

@@ -44,6 +44,7 @@ final class DatabaseManager: ObservableObject {
         manager.save(StoryNode.allMockNodes)
         manager.save(Story.mockStory)
         manager.undoManager.addManager(for: Story.mockStory.id)
+        manager.save(StoryFolder.mockFolders)
         return manager
     }()
 #endif
@@ -124,6 +125,17 @@ final class DatabaseManager: ObservableObject {
 
 extension DatabaseManager {
     @MainActor
+    func getOrCreateInboxFolder() -> StoryFolder {
+        let inboxID = StoryFolder.inboxID
+        if let inbox = fetchFirst(StoryFolder.self, predicate: #Predicate { $0.id == inboxID }) {
+            return inbox
+        }
+        let inbox = StoryFolder(id: inboxID, title: "Inbox", layoutPriority: -1)
+        save(inbox)
+        return inbox
+    }
+    
+    @MainActor
     func storyExists(_ story: Story) -> Bool {
         let storyId = story.id
         let descriptor = FetchDescriptor(predicate: #Predicate<Story> { $0.id == storyId })
@@ -132,11 +144,15 @@ extension DatabaseManager {
     
     @discardableResult
     @MainActor
-    func createStory(title: String? = nil, tagline: String? = nil, author: String? = nil) -> Story {
+    func createStory(title: String? = nil, tagline: String? = nil, author: String? = nil, in folder: StoryFolder? = nil) -> Story {
         let rootNode = StoryNode()
         let story = Story(title: title, tagline: tagline, author: author, rootNode: rootNode, nodes: [rootNode])
         undoManager.addManager(for: story.id)
+        folder?.stories.append(story)
         save(story)
+        if let folder {
+            save(folder)
+        }
         return story
     }
     
