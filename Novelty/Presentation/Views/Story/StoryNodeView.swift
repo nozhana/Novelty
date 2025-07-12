@@ -44,7 +44,7 @@ struct StoryNodeView: View {
                                     .multilineTextAlignment(pageStyle.pageTitleTextAlignment)
                                     .submitLabel(.next)
                                     .onSubmit {
-                                        focusItem = .linkTitle
+                                        focusItem = .content
                                     }
                                     .focused($focusItem, equals: .title)
                                     .textFieldStyle(.plain)
