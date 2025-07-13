@@ -113,32 +113,41 @@ struct StoryBundleDropDelegate: DropDelegate {
         DispatchQueue.main.async {
             dropState = .idle
         }
-        guard let storyBundleProvider = info.itemProviders(for: [.noveltyStoryBundle]).first else { return false }
-        storyBundleProvider.loadItem(forTypeIdentifier: UTType.noveltyStoryBundle.identifier) { item, error in
-            if let error {
-                print("Failed to drop item: \(error)")
-            }
-            
-            let storyData: Data?
-            if let url = item as? URL,
-               url.startAccessingSecurityScopedResource() {
-                defer { url.stopAccessingSecurityScopedResource() }
-                storyData = try? Data(contentsOf: url)
-            } else if let data = item as? Data {
-                storyData = data
-            } else {
-                storyData = nil
-            }
-            if let storyData,
-               let base64DecodedData = Data(base64Encoded: storyData),
-               let decodedStoryDto = try? JSONDecoder().decode(StoryDTO.self, from: base64DecodedData) {
-                DispatchQueue.main.async {
-                    AlertManager.shared.presentImportStoryAlert(for: decodedStoryDto)
+        let storyBundleProviders = info.itemProviders(for: [.noveltyStoryBundle])
+        Task {
+            var storyDtos = [StoryDTO]()
+            for provider in storyBundleProviders {
+                guard provider.hasItemConformingToTypeIdentifier(UTType.noveltyStoryBundle.identifier) else { continue }
+                guard let item = try? await provider.loadItem(forTypeIdentifier: UTType.noveltyStoryBundle.identifier) else { continue }
+                
+                let storyData: Data?
+                if let url = item as? URL,
+                   url.startAccessingSecurityScopedResource() {
+                    defer { url.stopAccessingSecurityScopedResource() }
+                    storyData = try? Data(contentsOf: url)
+                } else if let data = item as? Data {
+                    storyData = data
+                } else {
+                    storyData = nil
                 }
-            } else if let storyData,
-                      let decodedPasswordProtectedStory = try? JSONDecoder().decode(PasswordProtectedStoryDTO.self, from: storyData) {
-                DispatchQueue.main.async {
-                    AlertManager.shared.presentImportPasswordProtectedStoryAlert(for: decodedPasswordProtectedStory)
+                if let storyData,
+                   let base64DecodedData = Data(base64Encoded: storyData),
+                   let decodedStoryDto = try? JSONDecoder().decode(StoryDTO.self, from: base64DecodedData) {
+                    storyDtos.append(decodedStoryDto)
+                } else if let storyData,
+                          let decodedPasswordProtectedStory = try? JSONDecoder().decode(PasswordProtectedStoryDTO.self, from: storyData) {
+                    await MainActor.run {
+                        AlertManager.shared.presentImportPasswordProtectedStoryAlert(for: decodedPasswordProtectedStory)
+                    }
+                }
+            }
+            if storyDtos.count == 1 {
+                await MainActor.run {
+                    AlertManager.shared.presentImportStoryAlert(for: storyDtos.first!)
+                }
+            } else if storyDtos.count > 1 {
+                await MainActor.run {
+                    AlertManager.shared.presentImportStoriesAlert(for: storyDtos)
                 }
             }
         }

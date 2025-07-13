@@ -15,6 +15,7 @@ struct StoryView: View {
     
     @State private var showInfo = false
     @State private var showTree = false
+    @State private var showQRCode = false
     @State private var fullscreen = false
     
     @State private var invalidator = 0
@@ -48,58 +49,7 @@ struct StoryView: View {
         
         Group {
             if showInfo {
-                List {
-                    Section {
-                        TextField("Title", text: Binding { story.title ?? "" } set: { story.title = $0 }, prompt: Text(story.title ?? "My Story"))
-                            .safeAreaInset(edge: .top, alignment: .leading, spacing: 6) {
-                                Text("Title")
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
-                            }
-                        TextField("Tagline", text: Binding { story.tagline ?? "" } set: { story.tagline = $0 }, prompt: Text(story.tagline ?? "A beautiful story."))
-                            .safeAreaInset(edge: .top, alignment: .leading, spacing: 6) {
-                                Text("Tagline")
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
-                            }
-                        TextField("Author", text: Binding { story.author ?? "" } set: { story.author = $0 }, prompt: Text(story.author ?? "John Doe"))
-                            .safeAreaInset(edge: .top, alignment: .leading, spacing: 6) {
-                                Text("Author")
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
-                            }
-                    } header: {
-                        Label("Metadata", systemImage: "info.circle")
-                    }
-                    
-                    Section {
-                        if let binding = Binding(passwordBinding) {
-                            SecureField("Password", text: binding, prompt: Text("1234"))
-                                .focused($isPasswordFocused)
-                                .keyboardType(.numberPad)
-                                .submitLabel(.done)
-                                .onChange(of: binding.wrappedValue) { _, newValue in
-                                    if newValue.count > 4 {
-                                        binding.wrappedValue = String(newValue.prefix(4))
-                                    }
-                                }
-                                .safeAreaInset(edge: .trailing, spacing: 8) {
-                                    Button("Remove password", role: .destructive) {
-                                        passwordBinding.wrappedValue = nil
-                                    }
-                                    .buttonStyle(.borderedProminent)
-                                    .buttonBorderShape(.capsule)
-                                }
-                        } else {
-                            Button("Protect with password", systemImage: "hand.raised") {
-                                passwordBinding.wrappedValue = "1234"
-                                isPasswordFocused = true
-                            }
-                        }
-                    } header: {
-                        Label("Privacy", systemImage: "person.badge.key")
-                    }
-                }
+                StoryInfoView(story: story, password: passwordBinding)
             } else if showTree {
                 let previousNode = story.currentNode
                 StoryTreeView(story: story) { selectedNode in
@@ -129,6 +79,7 @@ struct StoryView: View {
                         }
                     }
                 }
+                .environment(\.layoutDirection, story.isRightToLeft ? .rightToLeft : .leftToRight)
                 .environment(\.pageStyle, pageStyle)
             }
         }
@@ -157,6 +108,9 @@ struct StoryView: View {
                     invalidator += 1
                 }
             }
+        }
+        .sheet(isPresented: $showQRCode) {
+            StoryQRCodeView(story: story)
         }
         .toolbar {
             if showInfo || passwordBinding.wrappedValue == nil || isUnlocked {
@@ -226,11 +180,19 @@ struct StoryView: View {
                                 Button("Copy URL", systemImage: "link") {
                                     UIPasteboard.general.url = URL(string: "novelty:\(story.id)")
                                 }
-                                ShareLink("Share URL", item: URL(string: "novelty:\(story.id)")!, message: Text("Novelty: \(story.title ?? "Untitled Story")"))
-                                ShareLink("Share Story Bundle file", item: StoryDTO(story: story), message: Text("Novelty: \(story.title ?? "Untitled Story")"), preview: .init(story.title ?? "Untitled Story", image: Image(systemName: "book.pages")))
-                                if let password = passwordBinding.wrappedValue,
-                                   let passwordProtectedStory = try? PasswordProtectedStoryDTO(storyDto: StoryDTO(story: story), password: password) {
-                                    ShareLink("Share Password Protected Story Bundle file", item: passwordProtectedStory, message: Text("Novelty: \(story.title ?? "Untitled Story")"), preview: .init(story.title ?? "Untitled Story", image: Image(systemName: "book.pages")))
+                                Menu("Share...", systemImage: "square.and.arrow.up") {
+                                    ShareLink("Share URL", item: URL(string: "novelty:\(story.id)")!)
+                                    ShareLink("Share Story Bundle", item: StoryDTO(story: story), preview: .init(story.title ?? "Untitled Story", image: Image(systemName: "book.pages")))
+                                    Button("Share via QR code...", systemImage: "qrcode") {
+                                        showQRCode = true
+                                    }
+                                    
+                                    if let password = passwordBinding.wrappedValue,
+                                       let passwordProtectedStory = try? PasswordProtectedStoryDTO(storyDto: StoryDTO(story: story), password: password) {
+                                        Section("Password protected") {
+                                            ShareLink("Share Password Protected Story Bundle file", item: passwordProtectedStory, message: Text("Novelty: \(story.title ?? "Untitled Story")"), preview: .init(story.title ?? "Untitled Story", image: Image(systemName: "book.pages")))
+                                        }
+                                    }
                                 }
                             }
                             Section {
@@ -278,4 +240,163 @@ struct StoryView: View {
         StoryView(story: .mockStory)
     }
     .database(.preview)
+}
+
+private struct StoryInfoView: View {
+    var story: Story
+    @Binding var password: String?
+    
+    @FocusState private var isPasswordFocused: Bool
+    
+    var body: some View {
+        List {
+            Section {
+                TextField("Title", text: Binding { story.title ?? "" } set: { story.title = $0 }, prompt: Text(story.title ?? "My Story"))
+                    .safeAreaInset(edge: .top, alignment: .leading, spacing: 6) {
+                        Text("Title")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                TextField("Tagline", text: Binding { story.tagline ?? "" } set: { story.tagline = $0 }, prompt: Text(story.tagline ?? "A beautiful story."))
+                    .safeAreaInset(edge: .top, alignment: .leading, spacing: 6) {
+                        Text("Tagline")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                TextField("Author", text: Binding { story.author ?? "" } set: { story.author = $0 }, prompt: Text(story.author ?? "John Doe"))
+                    .safeAreaInset(edge: .top, alignment: .leading, spacing: 6) {
+                        Text("Author")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+            } header: {
+                Label("Metadata", systemImage: "info.circle")
+            }
+            
+            Section {
+                if let binding = Binding($password) {
+                    SecureField("Password", text: binding, prompt: Text("1234"))
+                        .focused($isPasswordFocused)
+                        .keyboardType(.numberPad)
+                        .submitLabel(.done)
+                        .onChange(of: binding.wrappedValue) { _, newValue in
+                            if newValue.count > 4 {
+                                binding.wrappedValue = String(newValue.prefix(4))
+                            }
+                        }
+                        .safeAreaInset(edge: .trailing, spacing: 8) {
+                            Button("Remove password", role: .destructive) {
+                                password = nil
+                            }
+                            .buttonStyle(.borderedProminent)
+                            .buttonBorderShape(.capsule)
+                        }
+                } else {
+                    Button("Protect with password", systemImage: "hand.raised") {
+                        password = "1234"
+                        isPasswordFocused = true
+                    }
+                }
+            } header: {
+                Label("Privacy", systemImage: "person.badge.key")
+            }
+            
+            Section {
+                @Bindable var bindable = story
+                Toggle("Right-to-Left layout", systemImage: "character.cursor.ibeam.ar", isOn: $bindable.isRightToLeft)
+            } header: {
+                Label("Display", systemImage: "slider.horizontal.below.sun.max")
+            }
+        }
+    }
+}
+
+private struct StoryQRCodeView: View {
+    var story: Story
+    
+    @Environment(\.dismiss) private var dismiss
+    
+    private let context = CIContext()
+    private let qrFilter = CIFilter.qrCodeGenerator()
+    
+    private func generateQRCode(from data: Data) -> UIImage {
+        qrFilter.message = data
+        guard let outputImage = qrFilter.outputImage,
+              let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else { return .init(ciImage: .red) }
+        return UIImage(cgImage: cgImage)
+    }
+    
+    private func storyCard(from data: Data) -> some View {
+        Image(uiImage: generateQRCode(from: data))
+            .interpolation(.none)
+            .resizable().scaledToFit()
+            .safeAreaInset(edge: .bottom, alignment: .leading, spacing: 16) {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(story.title ?? "Untitled Story")
+                        .font(.system(.headline, design: .serif, weight: .heavy))
+                        .safeAreaInset(edge: .trailing, alignment: .firstTextBaseline, spacing: 16) {
+                            Text("\(story.nodes.count %* "Page")")
+                                .font(.system(.caption, weight: .medium))
+                                .foregroundStyle(.secondary)
+                        }
+                    if let tagline = story.tagline {
+                        Text(tagline)
+                            .font(.system(.subheadline, design: .serif, weight: .semibold))
+                            .foregroundStyle(.secondary)
+                    }
+                    if let author = story.author {
+                        Text(author)
+                            .font(.system(.caption, design: .serif, weight: .bold))
+                    }
+                }
+            }
+            .padding(20)
+            .background(RoundedRectangle(cornerRadius: 14, style: .continuous).strokeBorder(.fill.tertiary, lineWidth: 2))
+            .background(.ultraThinMaterial, in: .rect(cornerRadius: 14, style: .continuous))
+    }
+    
+    var body: some View {
+        NavigationStack {
+            VStack(spacing: 64) {
+                let data: Data? = {
+                    let dto = StoryDTO(story: story)
+                    return try? JSONEncoder().encode(dto)
+                }()
+                if let data {
+                    if data.count <= 2953 {
+                        let card = storyCard(from: data)
+                        card
+                            .safeAreaInset(edge: .bottom, spacing: 24) {
+                                let backgroundedCard = card
+                                    .background(in: .rect)
+                                    .frame(width: UIScreen.main.bounds.width - 32)
+                                let renderer = ImageRenderer(content: backgroundedCard)
+                                if let uiImage = renderer.uiImage {
+                                    VStack(spacing: 16) {
+                                        Button("Save image to library", systemImage: "photo.stack") {
+                                            UIImageWriteToSavedPhotosAlbum(uiImage, nil, nil, nil)
+                                        }
+                                        
+                                        ShareLink("Share image", item: Image(uiImage: uiImage), preview: .init(story.title ?? "Untitled Story", image: Image(uiImage: uiImage)))
+                                    }
+                                    .font(.subheadline)
+                                    .buttonStyle(.bordered)
+                                    .buttonBorderShape(.capsule)
+                                }
+                            }
+                    } else {
+                        ContentUnavailableView("Story too large", systemImage: "exclamationmark.triangle", description: Text("Story too large to contain in a QR code."))
+                            .foregroundStyle(.secondary)
+                    }
+                } else {
+                    ContentUnavailableView("Invalid data", systemImage: "exclamationmark.triangle", description: Text("Failed to generate QR code from story data."))
+                        .foregroundStyle(.secondary)
+                }
+            }
+            .safeAreaPadding(32)
+            .toolbar {
+                Button("Dismiss") { dismiss() }
+            }
+        }
+    }
 }

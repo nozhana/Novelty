@@ -14,6 +14,7 @@ struct StoryDTO: Codable, Identifiable {
     var title: String?
     var tagline: String?
     var author: String?
+    var isRightToLeft = false
     var created: Date
     var updated: Date
     var rootNode: StoryNodeDTO
@@ -32,6 +33,7 @@ extension StoryDTO {
         self.title = story.title
         self.tagline = story.tagline
         self.author = story.author
+        self.isRightToLeft = story.isRightToLeft
         self.created = story.created
         self.updated = story.updated
         self.rootNode = StoryNodeDTO(node: story.rootNode)
@@ -57,7 +59,7 @@ extension Story {
     convenience init(dto: StoryDTO) {
         let rootNode = StoryNode(dto: dto.rootNode)
         let nodes = DFS(tree: Tree.from(rootNode, children: \.children)).map(\.value)
-        self.init(id: dto.id, title: dto.title, tagline: dto.tagline, author: dto.author, rootNode: rootNode, nodes: nodes)
+        self.init(id: dto.id, title: dto.title, tagline: dto.tagline, author: dto.author, rightToLeft: dto.isRightToLeft, rootNode: rootNode, nodes: nodes)
     }
 }
 

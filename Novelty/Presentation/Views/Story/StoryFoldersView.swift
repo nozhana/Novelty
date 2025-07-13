@@ -17,6 +17,9 @@ struct StoryFoldersView: View {
     @State private var dropState = DropState.idle
     @State private var showSettings = false
     @State private var showNearbyUsers = false
+    @State private var showScanner = false
+    
+    @State private var draggedFolderId: UUID?
     
     var body: some View {
         NavigationStack(path: $router.navigationPath) {
@@ -28,13 +31,33 @@ struct StoryFoldersView: View {
                 } else {
                     ScrollView {
                         LazyVGrid(columns: Array(repeating: .init(spacing: 16), count: 2), spacing: 16) {
-                            ForEach(folders) { folder in
+                            ReorderableForEach(data: folders, id: \.id, active: $draggedFolderId) { from, to in
+                                var newFolders = folders
+                                newFolders.move(fromOffsets: from, toOffset: to)
+                                for (offset, folder) in newFolders.enumerated() {
+                                    folder.layoutPriority = offset
+                                }
+                                database.saveChanges()
+                            } content: { folder in
                                 FolderItemView(folder: folder)
+                            } preview: { folder in
+                                Image(.folderIcon)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 120)
+                                    .overlay(alignment: .bottomTrailing) {
+                                        Text(folder.title)
+                                            .font(.caption)
+                                            .padding(24)
+                                    }
                             }
                         }
                     }
                     .contentMargins(20, for: .scrollContent)
                     .transition(.blurReplace)
+                    .dropOutsideContainer(forTypes: [.text]) {
+                        draggedFolderId = nil
+                    }
                 }
             }
             .safeAreaInset(edge: .bottom, spacing: 16) {
@@ -56,10 +79,16 @@ struct StoryFoldersView: View {
             .fullScreenCover(isPresented: $showSettings) {
                 SettingsView()
             }
+            .fullScreenCover(isPresented: $showScanner) {
+                StoryQRScannerView()
+            }
             .toolbar {
                 ToolbarItemGroup(placement: .topBarTrailing) {
                     Button("Nearby", systemImage: "wifi") {
                         showNearbyUsers = true
+                    }
+                    Button("Scanner", systemImage: "qrcode.viewfinder") {
+                        showScanner = true
                     }
                     Button("Settings", systemImage: "gearshape.fill") {
                         showSettings = true
@@ -104,10 +133,8 @@ private struct FolderItemView: View {
                         isEnabled = false
                     }
                     .font(.system(.callout, weight: .semibold))
-                    .frame(maxWidth: 86)
-                    .padding(.horizontal, 14)
-                    .padding(.vertical, 10)
-                    .background(.ultraThinMaterial, in: .rect(cornerRadius: 8))
+                    .padding(.bottom, 36)
+                    .padding(.horizontal, 20)
                     .onTapGesture {
                         isEnabled = true
                     }

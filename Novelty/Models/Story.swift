@@ -17,6 +17,7 @@ final class Story {
     var author: String?
     var created = Date.now
     var updated = Date.now
+    var isRightToLeft = false
     
     @Relationship(deleteRule: .nullify, inverse: \StoryNode.story)
     var nodes: [StoryNode]
@@ -26,11 +27,12 @@ final class Story {
     
     var folder: StoryFolder?
     
-    init(id: UUID = UUID(), title: String? = nil, tagline: String? = nil, author: String? = nil, rootNode: StoryNode, currentNode: StoryNode? = nil, nodes: [StoryNode] = []) {
+    init(id: UUID = UUID(), title: String? = nil, tagline: String? = nil, author: String? = nil, rightToLeft: Bool = false, rootNode: StoryNode, currentNode: StoryNode? = nil, nodes: [StoryNode] = []) {
         self.id = id
         self.title = title
         self.tagline = tagline
         self.author = author
+        self.isRightToLeft = rightToLeft
         self.rootNode = rootNode
         self.currentNode = currentNode
         self.nodes = nodes
@@ -38,7 +40,7 @@ final class Story {
 }
 
 extension Story {
-    convenience init(id: UUID = UUID(), title: String? = nil, tagline: String? = nil, author: String? = nil, currentNode: StoryNode? = nil, storyTree: @escaping () -> Tree<StoryNode>) {
+    convenience init(id: UUID = UUID(), title: String? = nil, tagline: String? = nil, author: String? = nil, rightToLeft: Bool = false, currentNode: StoryNode? = nil, storyTree: @escaping () -> Tree<StoryNode>) {
         let tree = storyTree()
         let dfs = DFS(tree: tree)
         var nodes = [StoryNode]()
@@ -46,7 +48,7 @@ extension Story {
             treeNode.value.children = treeNode.children.map(\.value)
             nodes.append(treeNode.value)
         }
-        self.init(id: id, title: title, tagline: tagline, author: author, rootNode: tree.value, currentNode: currentNode, nodes: nodes)
+        self.init(id: id, title: title, tagline: tagline, author: author, rightToLeft: rightToLeft, rootNode: tree.value, currentNode: currentNode, nodes: nodes)
     }
 }
 

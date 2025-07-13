@@ -19,7 +19,7 @@ enum Constants {
 }
 
 extension Constants {
-    enum CryptoWalletAddress: String, Identifiable, CaseIterable {
+    enum CryptoCoin: String, Identifiable, CaseIterable {
         case bitcoin
         case bitcoinCash
         case ethereum
@@ -77,6 +77,17 @@ extension Constants {
                 "TXyeiRXPHQL1PMEi1uV4KpcXvXcHFyHHMb"
             case .tron:
                 "TXyeiRXPHQL1PMEi1uV4KpcXvXcHFyHHMb"
+            }
+        }
+        
+        var uai: String {
+            switch self {
+            case .bitcoin: "c0"
+            case .bitcoinCash: "c145"
+            case .ethereum: "c60"
+            case .litecoin: "c2"
+            case .tether: "c195_tTR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"
+            case .tron: "c195"
             }
         }
     }

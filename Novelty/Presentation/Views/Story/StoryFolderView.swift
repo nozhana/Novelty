@@ -60,7 +60,9 @@ struct StoryFolderView: View {
                                 }
                             }
                         }
-                        .draggable(StoryDTO(story: story))
+                        .onDrag {
+                            NSItemProvider(object: story.id.uuidString as NSString)
+                        }
                     }
                     .onDelete { offsets in
                         let storiesToDelete = offsets.reduce(into: [Story]()) { $0.append(stories[$1]) }
@@ -68,33 +70,31 @@ struct StoryFolderView: View {
                     }
                 }
             }
-            .onDrop(of: [.noveltyStoryBundle], isTargeted: $isDropping) { providers in
-                guard let provider = providers.first(where: { $0.hasRepresentationConforming(toTypeIdentifier: UTType.noveltyStoryBundle.identifier) }) else { return false }
-                provider.loadItem(forTypeIdentifier: UTType.noveltyStoryBundle.identifier) { item, error in
-                    if let error {
-                        print("Failed to import story: \(error)")
-                        return
-                    }
-                    
-                    DispatchQueue.main.async {
-                        if let url = item as? URL,
-                           url.startAccessingSecurityScopedResource(),
-                           let data = try? Data(contentsOf: url),
-                           let base64DecodedData = Data(base64Encoded: data),
-                           let decodedID = (try? JSONDecoder().decode(StoryDTO.self, from: base64DecodedData))?.id,
-                           let story = database.fetchFirst(Story.self, predicate: #Predicate { $0.id == decodedID }) {
-                            story.folder = folder
-                            database.saveChanges()
-                        } else if let data = item as? Data,
-                                  let base64DecodedData = Data(base64Encoded: data),
-                                  let decodedID = (try? JSONDecoder().decode(StoryDTO.self, from: base64DecodedData))?.id,
-                                  let story = database.fetchFirst(Story.self, predicate: #Predicate { $0.id == decodedID }) {
-                            story.folder = folder
-                            database.saveChanges()
-                            invalidator += 1
+            .onDrop(of: [.text], isTargeted: $isDropping) { providers in
+                for provider in providers {
+                    guard provider.hasItemConformingToTypeIdentifier(UTType.text.identifier) else { continue }
+                    provider.loadItem(forTypeIdentifier: UTType.text.identifier) { item, error in
+                        if let error {
+                            print("Failed to import story: \(error)")
+                            return
+                        }
+                        
+                        DispatchQueue.main.async {
+                            guard let data = item as? Data,
+                                  let uuidString = String(data: data, encoding: .utf8),
+                                  let uuid = UUID(uuidString: uuidString),
+                                  let story = database.fetchFirst(Story.self, predicate: #Predicate { $0.id == uuid }) else { return }
+                            let previousFolder = story.folder
+                            database.transaction("Move Story", for: story.id) {
+                                story.folder = folder
+                            } rollback: {
+                                story.folder = previousFolder
+                            }
                         }
                     }
                 }
+                invalidator += 1
+                
                 return true
             }
             .invalidatable(trigger: invalidator)

@@ -13,7 +13,9 @@ struct StoryNodeView: View {
     var onSelected: (StoryNode) -> Void
     
     @EnvironmentObject private var database: DatabaseManager
+    @EnvironmentObject private var alerter: AlertManager
     @Environment(\.pageStyle) private var pageStyle
+    @Environment(\.layoutDirection) private var layoutDirection
     
     @State private var editButtonPopupLocation: CGPoint?
     @State private var isEditing = false
@@ -131,10 +133,18 @@ struct StoryNodeView: View {
                                 database.createStoryNode(in: node)
                             }
                             Divider()
-                            ForEach(node.story?.nodes ?? []) { candidate in
-                                if !node.children.contains(candidate) {
-                                    Button(candidate.title ?? "Untitled") {
-                                        node.children.append(candidate)
+                            ForEach(node.story?.nodes.filter { $0 != node && !node.children.contains($0) && node.story?.rootNode != $0 } ?? []) { candidate in
+                                Button(candidate.title ?? "Untitled Page") {
+                                    if let parentNode = candidate.parentNode {
+                                        alerter.present(title: "Page already referenced", message: "This page is already referenced by another page:\n \(parentNode.title ?? "Untitled Page")\n\nIf you link to this page from here, the other reference will be removed.", actions: [
+                                            .cancel {},
+                                            .destructive("Remove reference and link") {
+                                                candidate.parentNode = node
+                                                database.saveChanges()
+                                            }
+                                        ])
+                                    } else {
+                                        candidate.parentNode = node
                                         database.saveChanges()
                                     }
                                 }
@@ -186,7 +196,10 @@ struct StoryNodeView: View {
                     .padding(12)
                     .background(Circle().stroke(.secondary))
                     .background(in: .circle)
-                    .position(editButtonPopupLocation)
+                    .position(layoutDirection == .rightToLeft
+                              ? CGPoint(x: UIScreen.main.bounds.width - editButtonPopupLocation.x,
+                                        y: editButtonPopupLocation.y)
+                              : editButtonPopupLocation)
                     .onTapGesture {
                         withAnimation(.snappy) {
                             isEditing = true

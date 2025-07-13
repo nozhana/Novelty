@@ -16,7 +16,8 @@ struct PasswordWallView: View {
            password.count == 4 {
             PinCodeView(code: pinCode, onUnlocked: onUnlocked)
         } else {
-            TextPasswordView(password: password, onUnlocked: onUnlocked)
+            // TextPasswordView(password: password, onUnlocked: onUnlocked)
+            EmptyView()
         }
     }
 }
