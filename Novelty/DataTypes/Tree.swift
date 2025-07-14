@@ -79,11 +79,25 @@ struct Tree<T> {
 }
 
 extension Tree {
-    /// Convenience initializer to build a tree recusrively from a certain type using a keypath.
+    /// Construct a tree from another recursive structure with a keypath to the property that defines descendent values.
     /// - Parameters:
-    ///   - value: The root instance.
-    ///   - children: The keypath from the value type that results in the descendent nodes.
-    /// - Returns: A ``Tree`` of root type `T`.
+    ///   - value: The wrapped value of the root tree node.
+    ///   - children: The keypath from the generic parameter `T` that generates a list of its descendents of the same type.
+    /// - Returns: The root tree node.
+    ///
+    /// ## Example usage
+    /// ```swift
+    /// /*
+    /// The hypothetical "Food" structure contains a
+    /// "subitems" property that contains an array of "Food" items.
+    /// */
+    /// var lasagna = Food(.meal("Lasagna"))
+    /// lasagna.subitems = [Food(.ingredient("Pasta sheets")),
+    ///                     Food(.ingredient("Bechamel Sauce")),
+    ///                     Food(.ingredient("Cheese"))]
+    ///
+    /// let tree = Tree.from(lasagna, children: \.subitems)
+    /// ```
     static func from(_ value: T, children: KeyPath<T, [T]>) -> Self {
         Tree(value, children: value[keyPath: children].map { child in
             from(child, children: children)
@@ -199,7 +213,7 @@ extension Tree: ExpressibleByBooleanLiteral where T == Bool {
 
 /// A result builder that generates an array of ``Tree`` structures.
 ///
-/// - Note: See ``TreeView``.
+/// - Note: See ``Tree/init(_:children:)-8jpq1``.
 @resultBuilder
 struct TreeBuilder<T> {
     static func buildBlock(_ components: Tree<T>...) -> [Tree<T>] {
