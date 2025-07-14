@@ -7,26 +7,41 @@
 
 import SwiftUI
 
+/// A manager for showing alerts, the SwiftUI way.
+///
+/// - Note: This object uses a singleton pattern. See ``shared``.
 final class AlertManager: ObservableObject {
+    /// The singleton instance of ``AlertManager``.
     static let shared = AlertManager()
     private init() {}
     
+    /// The optional ``AlertContent`` to present.
     @Published private(set) var alert: AlertContent?
+    /// The content for an optional textfield in the presented alert.
     @Published var alertTextfieldContent = ""
+    /// Controls the presentation for an ``alert`` with an ``AlertContent``.
     @Published var isPresented = false
     
+    /// Present an alert to the user.
+    /// - Parameter alert: The content of the alert.
     @MainActor
     func present(_ alert: AlertContent) {
         self.alert = alert
         self.isPresented = true
     }
     
+    /// Present an alert to the user.
+    /// - Parameters:
+    ///   - title: The title of the alert to present.
+    ///   - message: The message of the alert to present.
+    ///   - actions: An array of ``AlertAction`` items to present with the alert.
     @MainActor
     func present(title: String, message: String, actions: [AlertAction] = []) {
         present(.init(title: title, message: message, actions: actions))
     }
 }
 
+/// A structure that defines the content of an alert, including a title, message, and optionally, actions.
 struct AlertContent: Identifiable {
     var id = UUID()
     var title: String
@@ -34,6 +49,7 @@ struct AlertContent: Identifiable {
     var actions: [AlertAction]
 }
 
+/// An enumeration that defines the possible actions for an alert.
 enum AlertAction: Identifiable {
     case `default`(_ title: String, action: () -> Void)
     case cancel(_ title: String = "Cancel", action: () -> Void)
@@ -73,6 +89,11 @@ enum AlertAction: Identifiable {
 }
 
 extension View {
+    /// Inject an ``AlertManager`` into a SwiftUI environment.
+    /// - Parameter manager: The ``AlertManager`` to inject.
+    /// - Returns: The injected view.
+    ///
+    /// - Note: This method injects the alert manager into the hierarchy and subscribes this view to its alerts.
     func alertManager(_ manager: AlertManager) -> some View {
         @ObservedObject var bindable = manager
         return self
