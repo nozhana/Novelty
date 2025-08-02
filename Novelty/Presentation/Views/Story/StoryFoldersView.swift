@@ -75,12 +75,15 @@ struct StoryFoldersView: View {
             .fullScreenCover(isPresented: $showNearbyUsers) {
                 NearbyView()
                     .environmentObject(NearbyConnectionManager.default())
+                    .localized()
             }
             .fullScreenCover(isPresented: $showSettings) {
                 SettingsView()
+                    .localized()
             }
             .fullScreenCover(isPresented: $showScanner) {
                 StoryQRScannerView()
+                    .localized()
             }
             .toolbar {
                 ToolbarItemGroup(placement: .topBarTrailing) {

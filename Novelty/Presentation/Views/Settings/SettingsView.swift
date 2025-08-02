@@ -17,9 +17,12 @@ struct SettingsView: View {
     @AppStorage(DefaultsKey.isOnboarded, store: .group) private var isOnboarded = false
     @AppStorage(DefaultsKey.resetTips, store: .group) private var resetTips = false
     
+    @EnvironmentObject private var localizer: Localizer
+    
     @State private var invalidator = 0
     
     @State private var showDonateView = false
+    @State private var showLanguageSettings = false
     
     var body: some View {
         let unlockedStories = cacheStore.get([UUID].self, forKey: DefaultsKey.unlockedStories) ?? []
@@ -36,7 +39,7 @@ struct SettingsView: View {
                     }
                     Picker("Keep stories unlocked for...", systemImage: "lock.open", selection: $defaultCacheTime) {
                         ForEach([300.0, 3600, 12 * 3600, 24 * 3600], id: \.self) { interval in
-                            let title: String = switch interval {
+                            let title: LocalizedStringKey = switch interval {
                             case 300: "Five minutes"
                             case 3600: "One hour"
                             case 12 * 3600: "12 Hours"
@@ -49,6 +52,31 @@ struct SettingsView: View {
                     .pickerStyle(.inline)
                 } header: {
                     Label("Privacy", systemImage: "hand.raised")
+                }
+                
+                Section {
+                    Button {
+                        showLanguageSettings = true
+                    } label: {
+                        HStack(alignment: .firstTextBaseline) {
+                            VStack(alignment: .leading, spacing: 8) {
+                                Text("Language")
+                                    .font(.headline.bold())
+                                if localizer.language != .en {
+                                    Text(verbatim: "Language")
+                                        .font(.subheadline)
+                                }
+                            }
+                            Spacer()
+                            VStack(alignment: .trailing, spacing: 8) {
+                                Text(localizer.language.displayName)
+                                if localizer.language != .en {
+                                    Text(localizer.language.englishDisplayName)
+                                        .font(.caption)
+                                }
+                            }
+                        }
+                    }
                 }
                 
 #if DEBUG
@@ -88,7 +116,7 @@ struct SettingsView: View {
                         .font(.caption.weight(.heavy))
                     Link(destination: Constants.githubUrl) {
                         Label {
-                            Text("@nozhana")
+                            Text(verbatim: "@nozhana")
                         } icon: {
                             Image(.githubLogo)
                                 .resizable().scaledToFit()
@@ -105,6 +133,7 @@ struct SettingsView: View {
                 .padding(.vertical, 12)
             }
             .navigationDestination(isPresented: $showDonateView, destination: DonateView.init)
+            .navigationDestination(isPresented: $showLanguageSettings, destination: LanguageSettingsView.init)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Done") {

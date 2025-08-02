@@ -12,9 +12,12 @@ import TipKit
 struct NoveltyApp: App {
     @ObservedObject private var router = Router.shared
     @ObservedObject private var alertManager = AlertManager.shared
+    @ObservedObject private var localizer = Localizer.shared
     
     @AppStorage(DefaultsKey.isOnboarded, store: .group) private var isOnboarded = false
     @AppStorage(DefaultsKey.resetTips, store: .group) private var resetTips = false
+    
+    @State private var showSettingLanguageView = false
     
     init() {
         if resetTips {
@@ -26,18 +29,39 @@ struct NoveltyApp: App {
     
     var body: some Scene {
         WindowGroup {
-            Group {
-                if isOnboarded {
+            ZStack {
+                if showSettingLanguageView {
+                    ProgressView("Setting Language")
+                        .font(.title2.bold())
+                        .transition(.move(edge: .leading).combined(with: .opacity).combined(with: .offset(x: -64)))
+                        .onAppear {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                withAnimation(.smooth) {
+                                    showSettingLanguageView = false
+                                }
+                            }
+                        }
+                        .zIndex(2)
+                } else if isOnboarded {
                     StoryFoldersView()
-                        .transition(.move(edge: .trailing))
+                        .transition(.move(edge: .trailing).combined(with: .offset(x: 64)))
+                        .zIndex(0)
                 } else {
                     OnboardingView {
-                        isOnboarded = true
+                        withAnimation(.smooth) {
+                            isOnboarded = true
+                        }
                     }
-                    .transition(.move(edge: .leading))
+                    .transition(.move(edge: .leading).combined(with: .offset(x: -64)))
+                    .zIndex(1)
                 }
             }
+            .animation(.smooth, value: isOnboarded != showSettingLanguageView)
             .alertManager(alertManager)
+            .localized(localizer)
+            .onChange(of: localizer.language) {
+                showSettingLanguageView = true
+            }
             .onOpenURL { url in
                 router.process(url)
             }

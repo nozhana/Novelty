@@ -75,6 +75,7 @@
 				"Extensions/Array+.swift",
 				"Extensions/UserDefaults+.swift",
 				Managers/Database/DatabaseManager.swift,
+				Managers/Localizer/Localizer.swift,
 				Managers/UndoManager/BatchUndoManager.swift,
 				Managers/UndoManager/StoriesUndoManager.swift,
 				Managers/UndoManager/UndoBindable.swift,
@@ -83,7 +84,9 @@
 				Models/StoryFolder.swift,
 				Models/StoryNode.swift,
 				Presentation/Environment/PageStyle.swift,
+				Presentation/Views/Settings/LanguageSettingsView.swift,
 				Resources/Assets.xcassets,
+				Resources/Localizable.xcstrings,
 				Utilities/Constants.swift,
 				Utilities/DefaultsKey.swift,
 				Utilities/Files.swift,
@@ -100,6 +103,11 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		3109E9772E3AADEF003EA6FB /* Scripts */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Scripts;
+			sourceTree = "<group>";
+		};
 		3190585E2E1C222500AC1564 /* NoveltyWidgets */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -152,6 +160,7 @@
 		319552B52E1A83DE00B0809D = {
 			isa = PBXGroup;
 			children = (
+				3109E9772E3AADEF003EA6FB /* Scripts */,
 				319058942E1C2AE000AC1564 /* NoveltyWidgetsExtension.entitlements */,
 				319552C02E1A83DE00B0809D /* Novelty */,
 				3190585E2E1C222500AC1564 /* NoveltyWidgets */,
@@ -200,6 +209,7 @@
 			buildPhases = (
 				319552BA2E1A83DE00B0809D /* Sources */,
 				319552BB2E1A83DE00B0809D /* Frameworks */,
+				3109E9802E3AAE02003EA6FB /* Auto-Localize strings */,
 				319552BC2E1A83DE00B0809D /* Resources */,
 				3190586F2E1C222800AC1564 /* Embed Foundation Extensions */,
 			);
@@ -209,6 +219,7 @@
 				319058692E1C222800AC1564 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
+				3109E9772E3AADEF003EA6FB /* Scripts */,
 				319552C02E1A83DE00B0809D /* Novelty */,
 			);
 			name = Novelty;
@@ -242,6 +253,9 @@
 			knownRegions = (
 				en,
 				Base,
+				fr,
+				de,
+				fa,
 			);
 			mainGroup = 319552B52E1A83DE00B0809D;
 			minimizedProjectReferenceProxies = 1;
@@ -274,6 +288,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3109E9802E3AAE02003EA6FB /* Auto-Localize strings */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Auto-Localize strings";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ \"$AUTO_LOCALIZATION\" == \"YES\" ]; then\n    echo \"Auto-Localization started\"\nelse\n    echo \"Skipping Auto-Localization\"\n    exit 0\nfi\n\n#!/bin/bash\nset -e\n\n# Activate venv\nexport VENV_DIR=\"${SRCROOT}/.venv_l10n\"\n\nif [ ! -d \"$VENV_DIR\" ]; then\n    python3 -m venv \"$VENV_DIR\"\n    \"$VENV_DIR/bin/pip\" install --upgrade pip\nfi\n\n\"$VENV_DIR/bin/pip\" install -q -U google-genai\n\"$VENV_DIR/bin/pip\" install python-dotenv\n\nsource \"$VENV_DIR/bin/activate\"\n\n# Environment variables\n# export GEMINI_API_KEY=\"xxxxxxxxxxxxxxxxxxxx\" # From local environment\n# export GEMINI_MODEL=\"gemini-2.5-flash\"\nexport PBXPROJ_PATH=\"${SRCROOT}/Novelty.xcodeproj/project.pbxproj\"\n\n# Path to script\nexport SCRIPT_PATH=\"${SRCROOT}/Scripts/Localizer/localizer.py\"\n\n# Find all .xcstrings files\nfind \"${SRCROOT}/Novelty/Resources\" -name \"*.xcstrings\" | while read xcstrings_path; do\n    echo \"Translating: $xcstrings_path\"\n    python \"$SCRIPT_PATH\" \"$xcstrings_path\"\ndone\n\ndeactivate\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		319058542E1C222500AC1564 /* Sources */ = {
@@ -396,7 +431,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -418,6 +453,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -459,7 +495,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -474,6 +510,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -483,6 +520,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				AUTO_LOCALIZATION = YES;
 				CODE_SIGN_ENTITLEMENTS = Novelty/Novelty.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -522,6 +560,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				AUTO_LOCALIZATION = YES;
 				CODE_SIGN_ENTITLEMENTS = Novelty/Novelty.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;

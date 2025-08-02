@@ -47,9 +47,11 @@ struct StoryView: View {
         let unlockedStories = DefaultsCacheStore.shared.get([UUID].self, forKey: DefaultsKey.unlockedStories) ?? []
         let isUnlocked = unlockedStories.contains(story.id)
         
-        Group {
+        ZStack {
             if showInfo {
                 StoryInfoView(story: story, password: passwordBinding)
+                    .transition(.rotation)
+                    .zIndex(0)
             } else if showTree {
                 let previousNode = story.currentNode
                 StoryTreeView(story: story) { selectedNode in
@@ -66,6 +68,8 @@ struct StoryView: View {
                         showTree = false
                     }
                 }
+                .transition(.rotation)
+                .zIndex(1)
             } else {
                 StoryNodeView(node: node, editable: editable) { selectedNode in
                     let previousNode = story.currentNode
@@ -81,8 +85,11 @@ struct StoryView: View {
                 }
                 .environment(\.layoutDirection, story.isRightToLeft ? .rightToLeft : .leftToRight)
                 .environment(\.pageStyle, pageStyle)
+                .transition(.rotation)
+                .zIndex(2)
             }
         }
+        .animation(.smooth, value: showInfo != showTree)
         .overlay(alignment: .bottomTrailing) {
             if fullscreen {
                 Button {
@@ -128,7 +135,7 @@ struct StoryView: View {
                     } else {
                         Menu("Options", systemImage: "ellipsis") {
                             Section("Story") {
-                                Button("New page", systemImage: "document.badge.plus") {
+                                Button("New Page", systemImage: "document.badge.plus") {
                                     let newNode = database.createStoryNode(in: node)
                                     database.transaction("Create new page", for: story.id) {
                                         story.currentNode = newNode
@@ -275,7 +282,7 @@ private struct StoryInfoView: View {
             
             Section {
                 if let binding = Binding($password) {
-                    SecureField("Password", text: binding, prompt: Text("1234"))
+                    SecureField("Password", text: binding, prompt: Text(verbatim: "1234"))
                         .focused($isPasswordFocused)
                         .keyboardType(.numberPad)
                         .submitLabel(.done)
@@ -335,7 +342,7 @@ private struct StoryQRCodeView: View {
                     Text(story.title ?? "Untitled Story")
                         .font(.system(.headline, design: .serif, weight: .heavy))
                         .safeAreaInset(edge: .trailing, alignment: .firstTextBaseline, spacing: 16) {
-                            Text("\(story.nodes.count %* "Page")")
+                            Text("^[\(story.nodes.count) Page](inflect: true)")
                                 .font(.system(.caption, weight: .medium))
                                 .foregroundStyle(.secondary)
                         }

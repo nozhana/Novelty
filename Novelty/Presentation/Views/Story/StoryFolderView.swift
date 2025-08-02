@@ -41,7 +41,7 @@ struct StoryFolderView: View {
                     ForEach(stories) { story in
                         NavigationLink(value: story) {
                             LabeledContent {
-                                Text(story.nodes.count %* "Page")
+                                Text("^[\(story.nodes.count) Page](inflect: true)")
                                     .foregroundStyle(.secondary)
                             } label: {
                                 VStack(alignment: .leading, spacing: 6) {
@@ -105,6 +105,7 @@ struct StoryFolderView: View {
                 router.navigationPath.append(story)
             }
         }
+        .navigationBarTitleDisplayMode(.inline)
         .navigationTitle(Binding($bindable.title), default: "Untitled Folder", editable: true)
     }
 }
