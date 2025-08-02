@@ -86,7 +86,6 @@
 				Presentation/Environment/PageStyle.swift,
 				Presentation/Views/Settings/LanguageSettingsView.swift,
 				Resources/Assets.xcassets,
-				Resources/Localizable.xcstrings,
 				Utilities/Constants.swift,
 				Utilities/DefaultsKey.swift,
 				Utilities/Files.swift,
@@ -256,6 +255,9 @@
 				fr,
 				de,
 				fa,
+				ar,
+				he,
+				"zh-Hans",
 			);
 			mainGroup = 319552B52E1A83DE00B0809D;
 			minimizedProjectReferenceProxies = 1;

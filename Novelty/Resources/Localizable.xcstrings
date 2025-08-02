@@ -3,6 +3,12 @@
   "strings": {
     "^[%lld Page](inflect: true)": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "[%lld Page](inflect: true)"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -15,10 +21,22 @@
             "value": "%lld صفحه"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "[%lld Page](inflect: true)"
+            "value": "%lld صفحة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld עמוד"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld 页"
           }
         }
       }
@@ -28,7 +46,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "12 heures"
+            "value": "12 Heures"
           }
         },
         "de": {
@@ -42,6 +60,24 @@
             "state": "translated",
             "value": "12 ساعت"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "12 ساعة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "12 שעות"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "12 小时"
+          }
         }
       }
     },
@@ -50,19 +86,37 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ajoutez une nouvelle histoire en appuyant sur le bouton %@"
+            "value": "Ajoutez une nouvelle histoire en appuyant sur le bouton %@."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Füge eine neue Geschichte hinzu, indem du auf die Schaltfläche „%@“ tippst."
+            "value": "Füge eine neue Geschichte hinzu, indem du auf die Schaltfläche %@ tippst."
           }
         },
         "fa": {
           "stringUnit": {
             "state": "translated",
-            "value": "با ضربه زدن روی دکمهٔ «%@» یک داستان جدید اضافه کنید."
+            "value": "با زدن دکمه‌ی %@ یک داستان جدید اضافه کنید."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أضف قصة جديدة بالضغط على زر %@."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הוסף סיפור חדש על ידי הקשה על כפתור ה-%@."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "轻点“%@”按钮以添加新故事。"
           }
         }
       }
@@ -78,13 +132,31 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Beispielgeschichten hinzufügen"
+            "value": "Scheingeschichten hinzufügen"
           }
         },
         "fa": {
           "stringUnit": {
             "state": "translated",
-            "value": "افزودن داستان‌های نمونه"
+            "value": "اضافه کردن داستان‌های آزمایشی"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أضف قصصًا وهمية"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הוסף סיפורי מוק"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "添加模拟故事"
           }
         }
       }
@@ -106,7 +178,25 @@
         "fa": {
           "stringUnit": {
             "state": "translated",
-            "value": "همهٔ داستان‌ها"
+            "value": "همه‌ی داستان‌ها"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "كل القصص"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "כל הסיפורים"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "所有故事"
           }
         }
       }
@@ -130,6 +220,24 @@
             "state": "translated",
             "value": "نویسنده"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "المؤلف"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מחבר"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "作者"
+          }
         }
       }
     },
@@ -150,7 +258,25 @@
         "fa": {
           "stringUnit": {
             "state": "translated",
-            "value": "در دسترس قرار بگیرد"
+            "value": "در دسترس شود"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تصبح متاحة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הפוך זמין"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "变得可用"
           }
         }
       }
@@ -166,13 +292,31 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Kaufe mir einen Kaffee"
+            "value": "Kauf mir einen Kaffee"
           }
         },
         "fa": {
           "stringUnit": {
             "state": "translated",
-            "value": "یک قهوه برایم بخر"
+            "value": "قهوه‌ای برایم بخر"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اشترِ لي قهوة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "קנה לי קפה"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "请我喝杯咖啡"
           }
         }
       }
@@ -188,13 +332,31 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Wähle eine Geschichte aus, die in diesem Widget angezeigt werden soll."
+            "value": "Wähle eine Geschichte aus, die auf diesem Widget angezeigt werden soll."
           }
         },
         "fa": {
           "stringUnit": {
             "state": "translated",
-            "value": "داستانی را برای نمایش در این ویجت انتخاب کنید."
+            "value": "یک داستان برای نمایش در این ویجت انتخاب کنید."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اختر قصة لعرضها على هذه الأداة."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בחר סיפור להצגה בווידג'ט זה."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "选择一个故事来显示在此小组件上。"
           }
         }
       }
@@ -210,7 +372,7 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Löschen"
+            "value": "Leeren"
           }
         },
         "fa": {
@@ -218,11 +380,35 @@
             "state": "translated",
             "value": "پاک کردن"
           }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مسح"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "נקה"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "清除"
+          }
         }
       }
     },
     "Continue": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Continuer"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -235,16 +421,34 @@
             "value": "ادامه"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Continuer"
+            "value": "متابعة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "המשך"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "继续"
           }
         }
       }
     },
     "Continue Reading": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Continuer la lecture"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -254,19 +458,37 @@
         "fa": {
           "stringUnit": {
             "state": "translated",
-            "value": "ادامه خواندن"
+            "value": "ادامه‌ی خواندن"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Continuer la lecture"
+            "value": "متابعة القراءة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "המשך קריאה"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "继续阅读"
           }
         }
       }
     },
     "Copied to clipboard.": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copié dans le presse-papiers."
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -279,16 +501,34 @@
             "value": "در کلیپ‌بورد کپی شد."
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Copié dans le presse-papiers."
+            "value": "تم النسخ إلى الحافظة."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הועתק ללוח."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已复制到剪贴板。"
           }
         }
       }
     },
     "Copy URL": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copier l'URL"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -298,41 +538,77 @@
         "fa": {
           "stringUnit": {
             "state": "translated",
-            "value": "کپی پیوند"
+            "value": "کپی کردن نشانی اینترنتی"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Copier l'URL"
+            "value": "نسخ الرابط"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "העתק URL"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "复制 URL"
           }
         }
       }
     },
     "Create a new folder by tapping the %@ button.": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Créez un nouveau dossier en appuyant sur le bouton %@."
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Erstellen Sie einen neuen Ordner, indem Sie auf die Schaltfläche „%@“ tippen."
+            "value": "Erstelle einen neuen Ordner, indem du auf die Schaltfläche %@ tippst."
           }
         },
         "fa": {
           "stringUnit": {
             "state": "translated",
-            "value": "با زدن دکمه‌ی «%@»، پوشه‌ی جدید بسازید."
+            "value": "با زدن دکمه‌ی %@ یک پوشه‌ی جدید بسازید."
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Créez un nouveau dossier en appuyant sur le bouton %@."
+            "value": "أنشئ مجلدًا جديدًا بالضغط على زر %@."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "צור תיקיה חדשה על ידי הקשה על כפתור ה-%@."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "轻点“%@”按钮以创建新文件夹。"
           }
         }
       }
     },
     "Danger Zone": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zone de danger"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -345,16 +621,34 @@
             "value": "منطقه‌ی خطر"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Zone de danger"
+            "value": "منطقة الخطر"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אזור סכנה"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "危险区"
           }
         }
       }
     },
     "Delete": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Supprimer"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -367,16 +661,34 @@
             "value": "حذف"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Supprimer"
+            "value": "حذف"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מחק"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "删除"
           }
         }
       }
     },
     "Delete page": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Supprimer la page"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -386,19 +698,37 @@
         "fa": {
           "stringUnit": {
             "state": "translated",
-            "value": "حذف صفحه"
+            "value": "حذف برگه"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Supprimer la page"
+            "value": "حذف الصفحة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מחק עמוד"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "删除页面"
           }
         }
       }
     },
     "Developer": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Développeur"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -408,19 +738,37 @@
         "fa": {
           "stringUnit": {
             "state": "translated",
-            "value": "توسعه‌دهنده"
+            "value": "برنامه‌نویس"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Développeur"
+            "value": "المطور"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מפתח"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "开发者"
           }
         }
       }
     },
     "Dim blue light": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Réduire la lumière bleue"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -433,38 +781,74 @@
             "value": "کاهش نور آبی"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Lumière bleue faible"
+            "value": "تخفيف الضوء الأزرق"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "עמעם אור כחול"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "调暗蓝光"
           }
         }
       }
     },
     "Dismiss": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rejeter"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Schließen"
+            "value": "Verwerfen"
           }
         },
         "fa": {
           "stringUnit": {
             "state": "translated",
-            "value": "رد کردن"
+            "value": "بستن"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Rejeter"
+            "value": "تجاهل"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בטל"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "忽略"
           }
         }
       }
     },
     "Display": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Affichage"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -477,38 +861,74 @@
             "value": "نمایش"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Afficher"
+            "value": "عرض"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הצג"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "显示"
           }
         }
       }
     },
     "Donate using Trust Wallet": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Faire un don en utilisant Trust Wallet"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Spenden über Trust Wallet"
+            "value": "Spende mit Trust Wallet"
           }
         },
         "fa": {
           "stringUnit": {
             "state": "translated",
-            "value": "اهدای کمک مالی با Trust Wallet"
+            "value": "اهدای کمک با استفاده از Trust Wallet"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Faire un don avec Trust Wallet"
+            "value": "تبرع باستخدام Trust Wallet"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "תרום באמצעות Trust Wallet"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "使用 Trust Wallet 捐赠"
           }
         }
       }
     },
     "Done": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fait"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -521,38 +941,74 @@
             "value": "انجام شد"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Terminé"
+            "value": "تم"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בוצע"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "完成"
           }
         }
       }
     },
     "Drop a story bundle file here to import.": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Déposez un fichier de bundle d'histoire ici pour l'importer."
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Legen Sie eine Story-Bundle-Datei hier ab, um sie zu importieren."
+            "value": "Ziehe hier eine Story-Bundle-Datei her, um sie zu importieren."
           }
         },
         "fa": {
           "stringUnit": {
             "state": "translated",
-            "value": "برای درون‌ریزی، یک فایل بسته داستان را اینجا رها کنید."
+            "value": "برای وارد کردن فایل باندل داستان را اینجا رها کنید."
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Déposez un fichier de paquet d'histoires ici pour l'importer."
+            "value": "اسقط ملف حزمة القصة هنا للاستيراد."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "גרור לכאן קובץ חבילת סיפורים לייבוא."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "将故事包文件拖至此处以导入。"
           }
         }
       }
     },
     "Edit Content": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modifier le contenu"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -565,38 +1021,74 @@
             "value": "ویرایش محتوا"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Modifier le contenu"
+            "value": "تعديل المحتوى"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ערוך תוכן"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "编辑内容"
           }
         }
       }
     },
     "Edit the content of this page by double tapping on it.": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modifiez le contenu de cette page en double-cliquant dessus."
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Bearbeiten Sie den Inhalt dieser Seite, indem Sie doppelt darauf tippen."
+            "value": "Bearbeite den Inhalt dieser Seite, indem du doppelt darauf tippst."
           }
         },
         "fa": {
           "stringUnit": {
             "state": "translated",
-            "value": "با دو بار ضربه زدن، محتوای این صفحه را ویرایش کنید."
+            "value": "با دو بار زدن روی این صفحه محتوای آن را ویرایش کنید."
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Modifiez le contenu de cette page en appuyant deux fois dessus."
+            "value": "عدّل محتوى هذه الصفحة عن طريق النقر المزدوج عليها."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ערוך את תוכן העמוד הזה על ידי הקשה כפולה עליו."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "双击此页面以编辑其内容。"
           }
         }
       }
     },
     "Failed to generate QR code from story data.": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Échec de la génération du code QR à partir des données de l'histoire."
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -609,16 +1101,34 @@
             "value": "تولید کد QR از داده‌های داستان با شکست مواجه شد."
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Échec de la génération du code QR à partir des données de l'histoire."
+            "value": "فشل في إنشاء رمز QR من بيانات القصة."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "יצירת קוד QR מנתוני הסיפור נכשלה."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无法从故事数据生成二维码。"
           }
         }
       }
     },
     "Five minutes": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cinq minutes"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -631,16 +1141,34 @@
             "value": "پنج دقیقه"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Cinq minutes"
+            "value": "خمس دقائق"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "חמש דקות"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "五分钟"
           }
         }
       }
     },
     "Fullscreen": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Plein écran"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -653,60 +1181,114 @@
             "value": "تمام صفحه"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Plein écran"
+            "value": "ملء الشاشة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מסך מלא"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "全屏"
           }
         }
       }
     },
     "Import story": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importer une histoire"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Story importieren"
+            "value": "Geschichte importieren"
           }
         },
         "fa": {
           "stringUnit": {
             "state": "translated",
-            "value": "درون‌ریزی داستان"
+            "value": "وارد کردن داستان"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Importer une histoire"
+            "value": "استيراد قصة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ייבא סיפור"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "导入故事"
           }
         }
       }
     },
     "Import Story": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importer une histoire"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Story importieren"
+            "value": "Geschichte importieren"
           }
         },
         "fa": {
           "stringUnit": {
             "state": "translated",
-            "value": "درون‌ریزی داستان"
+            "value": "وارد کردن داستان"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Importer une histoire"
+            "value": "استيراد قصة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ייבא סיפור"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "导入故事"
           }
         }
       }
     },
     "Invalid data": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Données invalides"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -716,19 +1298,37 @@
         "fa": {
           "stringUnit": {
             "state": "translated",
-            "value": "داده نامعتبر"
+            "value": "داده‌های نامعتبر"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Données invalides"
+            "value": "بيانات غير صالحة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "נתונים לא חוקיים"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无效数据"
           }
         }
       }
     },
     "Invalid file type": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Type de fichier invalide"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -741,38 +1341,74 @@
             "value": "نوع فایل نامعتبر"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Type de fichier invalide"
+            "value": "نوع ملف غير صالح"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "סוג קובץ לא חוקי"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无效文件类型"
           }
         }
       }
     },
     "Keep stories unlocked for...": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gardez les histoires déverrouillées pendant..."
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Stories entsperrt lassen für..."
+            "value": "Geschichten entsperrt lassen für..."
           }
         },
         "fa": {
           "stringUnit": {
             "state": "translated",
-            "value": "باز نگه داشتن داستان‌ها برای..."
+            "value": "داستان‌ها را برای مدت... باز نگه دار"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Gardez les histoires déverrouillées pour..."
+            "value": "احتفظ بالقصص غير مقفلة لمدة..."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שמור סיפורים לא נעולים למשך..."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保持故事解锁时长为……"
           }
         }
       }
     },
     "Language": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Langue"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -785,16 +1421,34 @@
             "value": "زبان"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Langue"
+            "value": "اللغة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שפה"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "语言"
           }
         }
       }
     },
     "Link": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lien"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -807,20 +1461,38 @@
             "value": "پیوند"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Lien"
+            "value": "الرابط"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "קישור"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "链接"
           }
         }
       }
     },
     "Lock all stories": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verrouiller toutes les histoires"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Alle Stories sperren"
+            "value": "Alle Geschichten sperren"
           }
         },
         "fa": {
@@ -829,20 +1501,38 @@
             "value": "قفل کردن همه‌ی داستان‌ها"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Verrouiller toutes les histoires"
+            "value": "قفل جميع القصص"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "נעל את כל הסיפורים"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "锁定所有故事"
           }
         }
       }
     },
     "Lock story": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verrouiller l'histoire"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Story sperren"
+            "value": "Geschichte sperren"
           }
         },
         "fa": {
@@ -851,16 +1541,34 @@
             "value": "قفل کردن داستان"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Verrouiller l'histoire"
+            "value": "قفل القصة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "נעל סיפור"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "锁定故事"
           }
         }
       }
     },
     "Made with 💜": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fait avec 💜"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -873,20 +1581,38 @@
             "value": "ساخته شده با 💜"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Fait avec 💜"
+            "value": "صنع بحب 💜"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "נוצר עם 💜"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "用 💜 制作"
           }
         }
       }
     },
     "Make Interactive Stories.": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Créez des histoires interactives."
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Interaktive Stories erstellen."
+            "value": "Interaktive Geschichten erstellen."
           }
         },
         "fa": {
@@ -895,16 +1621,34 @@
             "value": "داستان‌های تعاملی بسازید."
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Créez des histoires interactives."
+            "value": "اصنع قصصًا تفاعلية."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "צור סיפורים אינטראקטיביים."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "制作互动故事。"
           }
         }
       }
     },
     "Metadata": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Métadonnées"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -917,16 +1661,34 @@
             "value": "فراداده"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Métadonnées"
+            "value": "البيانات الوصفية"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מטא-דאטה"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "元数据"
           }
         }
       }
     },
     "Nearby": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "À proximité"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -939,16 +1701,34 @@
             "value": "نزدیک"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "À proximité"
+            "value": "قريب"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בקרבת מקום"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "附近"
           }
         }
       }
     },
     "Nearby users": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Utilisateurs à proximité"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -961,16 +1741,34 @@
             "value": "کاربران نزدیک"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Utilisateurs à proximité"
+            "value": "المستخدمون القريبون"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "משתמשים קרובים"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "附近用户"
           }
         }
       }
     },
     "New Folder": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nouveau dossier"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -983,16 +1781,34 @@
             "value": "پوشه‌ی جدید"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nouveau dossier"
+            "value": "مجلد جديد"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "תיקיה חדשה"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "新建文件夹"
           }
         }
       }
     },
     "New Page": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nouvelle page"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -1005,20 +1821,38 @@
             "value": "صفحه‌ی جدید"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nouvelle page"
+            "value": "صفحة جديدة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "עמוד חדש"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "新建页面"
           }
         }
       }
     },
     "New Story": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nouvelle histoire"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Neue Story"
+            "value": "Neue Geschichte"
           }
         },
         "fa": {
@@ -1027,16 +1861,34 @@
             "value": "داستان جدید"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nouvelle histoire"
+            "value": "قصة جديدة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "סיפור חדש"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "新建故事"
           }
         }
       }
     },
     "No Folders": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucun dossier"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -1049,20 +1901,38 @@
             "value": "هیچ پوشه‌ای نیست"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Pas de dossiers"
+            "value": "لا مجلدات"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אין תיקיות"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无文件夹"
           }
         }
       }
     },
     "No stories": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucune histoire"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Keine Stories"
+            "value": "Keine Geschichten"
           }
         },
         "fa": {
@@ -1071,16 +1941,34 @@
             "value": "هیچ داستانی نیست"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Pas d'histoires"
+            "value": "لا توجد قصص"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אין סיפורים"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无故事"
           }
         }
       }
     },
     "Novelty: %@": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nouveauté : %@"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -1090,19 +1978,37 @@
         "fa": {
           "stringUnit": {
             "state": "translated",
-            "value": "تازگی: %@"
+            "value": "جدید: %@"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nouveauté: %@"
+            "value": "حداثة: %@"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "חידוש: %@"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "新颖性：%@"
           }
         }
       }
     },
     "One day": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un jour"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -1115,16 +2021,34 @@
             "value": "یک روز"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Un jour"
+            "value": "يوم واحد"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "יום אחד"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "一天"
           }
         }
       }
     },
     "One hour": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Une heure"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -1137,16 +2061,34 @@
             "value": "یک ساعت"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Une heure"
+            "value": "ساعة واحدة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שעה אחת"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "一小时"
           }
         }
       }
     },
     "Options": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Options"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -1159,20 +2101,38 @@
             "value": "گزینه‌ها"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Options"
+            "value": "خيارات"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אפשרויות"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "选项"
           }
         }
       }
     },
     "Orphans": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Orphelins"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Verwaiste Seiten"
+            "value": "Waisen"
           }
         },
         "fa": {
@@ -1181,16 +2141,34 @@
             "value": "یتیم‌ها"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Orphelins"
+            "value": "اليتامى"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "יתומים"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "孤立页面"
           }
         }
       }
     },
     "Page Style": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Style de page"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -1203,16 +2181,34 @@
             "value": "سبک صفحه"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Style de page"
+            "value": "نمط الصفحة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "סגנון עמוד"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "页面样式"
           }
         }
       }
     },
     "Password": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mot de passe"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -1225,16 +2221,34 @@
             "value": "گذرواژه"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Mot de passe"
+            "value": "كلمة المرور"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "סיסמה"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "密码"
           }
         }
       }
     },
     "Password protected": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Protégé par mot de passe"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -1244,19 +2258,37 @@
         "fa": {
           "stringUnit": {
             "state": "translated",
-            "value": "محافظت شده با گذرواژه"
+            "value": "محافظت‌شده با گذرواژه"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Protégé par mot de passe"
+            "value": "محمي بكلمة مرور"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מוגן בסיסמה"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "密码保护"
           }
         }
       }
     },
     "Pick a file": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choisir un fichier"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -1266,19 +2298,37 @@
         "fa": {
           "stringUnit": {
             "state": "translated",
-            "value": "یک فایل انتخاب کنید"
+            "value": "انتخاب یک فایل"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Choisir un fichier"
+            "value": "اختر ملفًا"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בחר קובץ"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "选择文件"
           }
         }
       }
     },
     "Privacy": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Confidentialité"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -1291,16 +2341,34 @@
             "value": "حریم خصوصی"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Confidentialité"
+            "value": "الخصوصية"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "פרטיות"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "隐私"
           }
         }
       }
     },
     "Protect with password": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Protéger avec un mot de passe"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -1313,16 +2381,34 @@
             "value": "محافظت با گذرواژه"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Protéger avec un mot de passe"
+            "value": "حماية بكلمة مرور"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הגן באמצעות סיסמה"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "密码保护"
           }
         }
       }
     },
     "Quick Link": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lien rapide"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -1335,16 +2421,34 @@
             "value": "پیوند سریع"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Lien rapide"
+            "value": "رابط سريع"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "קישור מהיר"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "快速链接"
           }
         }
       }
     },
     "Remove password": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Supprimer le mot de passe"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -1357,16 +2461,34 @@
             "value": "حذف گذرواژه"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Supprimer le mot de passe"
+            "value": "إزالة كلمة المرور"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הסר סיסמה"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "移除密码"
           }
         }
       }
     },
     "Rename": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Renommer"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -1379,16 +2501,34 @@
             "value": "تغییر نام"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Renommer"
+            "value": "إعادة تسمية"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שנה שם"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "重命名"
           }
         }
       }
     },
     "Reset": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Réinitialiser"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -1401,16 +2541,34 @@
             "value": "بازنشانی"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Réinitialiser"
+            "value": "إعادة تعيين"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אפס"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "重置"
           }
         }
       }
     },
     "Reset Onboarding": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Réinitialiser l'intégration"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -1420,19 +2578,37 @@
         "fa": {
           "stringUnit": {
             "state": "translated",
-            "value": "بازنشانی راهنما"
+            "value": "بازنشانی مراحل آغازین"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Réinitialiser l'intégration"
+            "value": "إعادة تعيين الإعداد"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אפס תהליך קליטה"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "重置新手引导"
           }
         }
       }
     },
     "Reset Tips": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Réinitialiser les astuces"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -1442,41 +2618,77 @@
         "fa": {
           "stringUnit": {
             "state": "translated",
-            "value": "بازنشانی راهنمایی‌ها"
+            "value": "بازنشانی نکات"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Réinitialiser les astuces"
+            "value": "إعادة تعيين التلميحات"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אפס טיפים"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "重置提示"
           }
         }
       }
     },
     "Right-to-Left layout": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Disposition de droite à gauche"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Rechts-nach-Links-Layout"
+            "value": "Rechts-nach-links-Layout"
           }
         },
         "fa": {
           "stringUnit": {
             "state": "translated",
-            "value": "چیدمان راست‌به‌چپ"
+            "value": "طرح‌بندی راست به چپ"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Disposition de droite à gauche"
+            "value": "تخطيط من اليمين إلى اليسار"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "פריסה מימין לשמאל"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "从右到左布局"
           }
         }
       }
     },
     "Save image to library": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enregistrer l'image dans la bibliothèque"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -1486,19 +2698,37 @@
         "fa": {
           "stringUnit": {
             "state": "translated",
-            "value": "ذخیره تصویر در گالری"
+            "value": "ذخیره کردن تصویر در کتابخانه"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Enregistrer l'image dans la bibliothèque"
+            "value": "حفظ الصورة في المكتبة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שמור תמונה לספרייה"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "将图片保存到图库"
           }
         }
       }
     },
     "Scanner": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scanner"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -1511,20 +2741,38 @@
             "value": "اسکنر"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Scanner"
+            "value": "الماسح الضوئي"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "סורק"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "扫描仪"
           }
         }
       }
     },
     "Send story": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Envoyer l'histoire"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Story senden"
+            "value": "Geschichte senden"
           }
         },
         "fa": {
@@ -1533,16 +2781,34 @@
             "value": "ارسال داستان"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Envoyer l'histoire"
+            "value": "إرسال القصة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שלח סיפור"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "发送故事"
           }
         }
       }
     },
     "Setting Language": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Définir la langue"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -1555,16 +2821,34 @@
             "value": "تنظیم زبان"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Définir la langue"
+            "value": "تعيين اللغة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הגדרת שפה"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "设置语言"
           }
         }
       }
     },
     "Settings": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paramètres"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -1577,16 +2861,34 @@
             "value": "تنظیمات"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Paramètres"
+            "value": "الإعدادات"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הגדרות"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "设置"
           }
         }
       }
     },
     "Share": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Partager"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -1599,16 +2901,34 @@
             "value": "اشتراک‌گذاری"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Partager"
+            "value": "مشاركة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שתף"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "分享"
           }
         }
       }
     },
     "Share image": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Partager l'image"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -1621,16 +2941,34 @@
             "value": "اشتراک‌گذاری تصویر"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Partager l'image"
+            "value": "مشاركة الصورة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שתף תמונה"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "分享图片"
           }
         }
       }
     },
     "Share Password Protected Story Bundle file": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Partager le fichier de bundle d'histoire protégé par mot de passe"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -1640,19 +2978,37 @@
         "fa": {
           "stringUnit": {
             "state": "translated",
-            "value": "اشتراک‌گذاری فایل بسته‌ی داستان محافظت‌شده با گذرواژه"
+            "value": "اشتراک‌گذاری فایل باندل داستان محافظت‌شده با گذرواژه"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Partager le fichier du paquet d'histoires protégé par mot de passe"
+            "value": "مشاركة ملف حزمة القصة المحمي بكلمة مرور"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שתף קובץ חבילת סיפורים מוגן בסיסמה"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "分享密码保护的故事包文件"
           }
         }
       }
     },
     "Share Story Bundle": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Partager le bundle d'histoire"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -1662,19 +3018,37 @@
         "fa": {
           "stringUnit": {
             "state": "translated",
-            "value": "اشتراک‌گذاری بسته‌ی داستان"
+            "value": "اشتراک‌گذاری باندل داستان"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Partager le paquet d'histoires"
+            "value": "مشاركة حزمة القصة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שתף חבילת סיפורים"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "分享故事包"
           }
         }
       }
     },
     "Share URL": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Partager l'URL"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -1684,23 +3058,41 @@
         "fa": {
           "stringUnit": {
             "state": "translated",
-            "value": "اشتراک‌گذاری پیوند"
+            "value": "اشتراک‌گذاری نشانی اینترنتی"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Partager l'URL"
+            "value": "مشاركة الرابط"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שתף URL"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "分享 URL"
           }
         }
       }
     },
     "Share via QR code...": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Partager via code QR..."
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Teilen über QR-Code..."
+            "value": "Via QR-Code teilen..."
           }
         },
         "fa": {
@@ -1709,16 +3101,34 @@
             "value": "اشتراک‌گذاری از طریق کد QR..."
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Partager via code QR..."
+            "value": "مشاركة عبر رمز الاستجابة السريعة..."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שתף באמצעות קוד QR..."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "通过二维码分享..."
           }
         }
       }
     },
     "Share...": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Partager..."
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -1731,16 +3141,34 @@
             "value": "اشتراک‌گذاری..."
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Partager..."
+            "value": "مشاركة..."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שתף..."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "分享..."
           }
         }
       }
     },
     "Start": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Démarrer"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -1753,20 +3181,38 @@
             "value": "شروع"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Démarrer"
+            "value": "بدء"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "התחל"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "开始"
           }
         }
       }
     },
     "Story": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Histoire"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Story"
+            "value": "Geschichte"
           }
         },
         "fa": {
@@ -1775,20 +3221,38 @@
             "value": "داستان"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Histoire"
+            "value": "القصة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "סיפור"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "故事"
           }
         }
       }
     },
     "Story Info": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Informations sur l'histoire"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Story-Informationen"
+            "value": "Geschichte Info"
           }
         },
         "fa": {
@@ -1797,20 +3261,38 @@
             "value": "اطلاعات داستان"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Informations sur l'histoire"
+            "value": "معلومات القصة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "פרטי סיפור"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "故事信息"
           }
         }
       }
     },
     "Story too large": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Histoire trop grande"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Story zu groß"
+            "value": "Geschichte zu groß"
           }
         },
         "fa": {
@@ -1819,38 +3301,74 @@
             "value": "داستان بسیار بزرگ است"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Histoire trop grande"
+            "value": "القصة كبيرة جدًا"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הסיפור גדול מדי"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "故事过大"
           }
         }
       }
     },
     "Story too large to contain in a QR code.": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "L'histoire est trop grande pour être contenue dans un code QR."
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Story ist zu groß, um in einem QR-Code enthalten zu sein."
+            "value": "Die Geschichte ist zu groß, um in einem QR-Code enthalten zu sein."
           }
         },
         "fa": {
           "stringUnit": {
             "state": "translated",
-            "value": "داستان برای قرار گرفتن در کد QR بسیار بزرگ است."
+            "value": "داستان بسیار بزرگ است و نمی‌توان آن را در یک کد QR جای داد."
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "L'histoire est trop grande pour être contenue dans un code QR."
+            "value": "القصة كبيرة جدًا بحيث لا يمكن تضمينها في رمز QR."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הסיפור גדול מדי מכדי להיכלל בקוד QR."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "故事过大，无法包含在二维码中。"
           }
         }
       }
     },
     "Story Tree": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arbre d'histoire"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -1863,16 +3381,34 @@
             "value": "درخت داستان"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Arbre d'histoires"
+            "value": "شجرة القصة"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "עץ סיפור"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "故事树"
           }
         }
       }
     },
     "Tagline": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Slogan"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -1885,60 +3421,114 @@
             "value": "شعار"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Slogan"
+            "value": "التعليق"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "סיסמה"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "标语"
           }
         }
       }
     },
     "Tap and hold on the link button to quickly link to another page.": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Appuyez et maintenez le bouton de lien pour lier rapidement à une autre page."
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tippen und halten Sie die Link-Schaltfläche, um schnell zu einer anderen Seite zu verlinken."
+            "value": "Tippe und halte auf den Link-Button, um schnell zu einer anderen Seite zu verlinken."
           }
         },
         "fa": {
           "stringUnit": {
             "state": "translated",
-            "value": "دکمه پیوند را لمس کرده و نگه دارید تا به سرعت به صفحه‌ی دیگری پیوند داده شود."
+            "value": "روی دکمه‌ی پیوند ضربه زده و نگه دارید تا به سرعت به صفحه‌ی دیگری پیوند دهید."
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Appuyez et maintenez le bouton de lien pour lier rapidement à une autre page."
+            "value": "اضغط مطولاً على زر الرابط لربط سريع بصفحة أخرى."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "גע והחזק את כפתור הקישור כדי לקשר במהירות לעמוד אחר."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "轻触并按住链接按钮可快速链接到其他页面。"
           }
         }
       }
     },
     "Tips will be reset on the next launch.": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les astuces seront réinitialisées au prochain lancement."
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tipps werden beim nächsten Start zurückgesetzt."
+            "value": "Die Tipps werden beim nächsten Start zurückgesetzt."
           }
         },
         "fa": {
           "stringUnit": {
             "state": "translated",
-            "value": "راهنمایی‌ها در اجرای بعدی بازنشانی خواهند شد."
+            "value": "نکات در راه‌اندازی بعدی بازنشانی خواهند شد."
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Les astuces seront réinitialisées au prochain lancement."
+            "value": "ستتم إعادة تعيين النصائح عند التشغيل التالي."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הטיפים יאופסו בהפעלה הבאה."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "提示将在下次启动时重置。"
           }
         }
       }
     },
     "Title": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Titre"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -1951,16 +3541,34 @@
             "value": "عنوان"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Titre"
+            "value": "العنوان"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "כותרת"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "标题"
           }
         }
       }
     },
     "Untitled Folder": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dossier sans titre"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -1970,19 +3578,37 @@
         "fa": {
           "stringUnit": {
             "state": "translated",
-            "value": "پوشه بدون عنوان"
+            "value": "پوشه‌ی بی‌نام"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Dossier sans titre"
+            "value": "مجلد بلا عنوان"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "תיקייה ללא כותרת"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无标题文件夹"
           }
         }
       }
     },
     "Untitled Page": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Page sans titre"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -1992,19 +3618,37 @@
         "fa": {
           "stringUnit": {
             "state": "translated",
-            "value": "صفحه بدون عنوان"
+            "value": "صفحه‌ی بی‌نام"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Page sans titre"
+            "value": "صفحة بلا عنوان"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "עמוד ללא כותרת"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无标题页面"
           }
         }
       }
     },
     "You": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vous"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
@@ -2017,20 +3661,38 @@
             "value": "شما"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Vous"
+            "value": "أنت"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אתה"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "你"
           }
         }
       }
     },
     "You are here": {
       "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vous êtes ici"
+          }
+        },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Sie sind hier"
+            "value": "Du bist hier"
           }
         },
         "fa": {
@@ -2039,10 +3701,22 @@
             "value": "شما اینجا هستید"
           }
         },
-        "fr": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Vous êtes ici"
+            "value": "أنت هنا"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אתה כאן"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "你在这里"
           }
         }
       }

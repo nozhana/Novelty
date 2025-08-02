@@ -30,6 +30,9 @@ enum Language: String, Identifiable, CaseIterable {
     case fr
     case de
     case fa
+    case ar
+    case he
+    case zh = "zh-Hans"
     
     var id: String { rawValue }
     
@@ -47,7 +50,7 @@ enum Language: String, Identifiable, CaseIterable {
     
     var layoutDirection: LayoutDirection {
         switch self {
-        case .fa: .rightToLeft
+        case .fa, .ar, .he: .rightToLeft
         default: .leftToRight
         }
     }
